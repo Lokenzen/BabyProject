@@ -35,19 +35,23 @@ import { takeUntil } from 'rxjs/operators';
 export class FormComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   isLoading = false;
-  selectedCategory: string = '';
-  selectedImage: string = '';
   
   private destroy$ = new Subject<void>();
 
-  // Images de sélection
-  categoryImages = [
-    { name: 'Personnelle', value: 'personal', icon: '👤', color: '#1976d2' },
-    { name: 'Professionnelle', value: 'professional', icon: '💼', color: '#388e3c' },
-    { name: 'Autre', value: 'other', icon: '📋', color: '#f57c00' }
+  // Options pour le sexe du bébé
+  sexOptions = [
+    { label: 'Garçon', value: 'M', icon: '👦' },
+    { label: 'Fille', value: 'F', icon: '👧' }
   ];
 
-  categories = this.categoryImages.map(img => ({ value: img.value, label: img.name }));
+  // Options pour les couleurs de yeux
+  eyeColors = ['Bleus', 'Marron', 'Verts', 'Noisette', 'Gris'];
+  
+  // Options pour les couleurs de cheveux
+  hairColors = ['Blonds', 'Bruns', 'Noirs', 'Roux', 'Châtain'];
+  
+  // Options pour le type de cheveux
+  hairTypes = ['Lisses', 'Ondulés', 'Bouclés', 'Très bouclés'];
 
   constructor(
     private fb: FormBuilder,
@@ -67,26 +71,23 @@ export class FormComponent implements OnInit, OnDestroy {
    */
   initializeForm(): void {
     this.form = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9\\s\\-\\+\\(\\)]+$')]],
-      category: ['', Validators.required]
+      firstName: ['', [Validators.required, Validators.minLength(2)]],
+      lastName: ['', [Validators.required, Validators.minLength(2)]],
+      babySex: ['', Validators.required],
+      babyName: ['', [Validators.required, Validators.minLength(2)]],
+      babyEyesColor: ['', Validators.required],
+      babyHairColor: ['', Validators.required],
+      babyBirthDate: ['', Validators.required],
+      babyHairType: ['', Validators.required],
+      babyWeight: ['', [Validators.required, Validators.pattern('^[0-9]+(\\.[0-9]{1,2})?$')]]
     });
-  }
-
-  /**
-   * Sélectionner une image de catégorie
-   */
-  selectImage(image: any): void {
-    this.selectedImage = image.value;
-    this.form.patchValue({ category: image.value });
   }
 
   /**
    * Vérifier si le formulaire est valide
    */
   isFormValid(): boolean {
-    return this.form.valid && this.selectedImage !== '';
+    return this.form.valid;
   }
 
   /**
@@ -100,9 +101,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
     this.isLoading = true;
     const formData: ResponseData = {
-      ...this.form.value,
-      imageUrl: this.selectedImage,
-      timestamp: new Date()
+      ...this.form.value
     };
 
     this.dataService.sendData(formData)
@@ -112,7 +111,6 @@ export class FormComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           this.showSnackBar('Données envoyées avec succès!', 'success');
           this.form.reset();
-          this.selectedImage = '';
           // Redirection vers les résultats
           setTimeout(() => {
             this.router.navigate(['/results']);
@@ -131,7 +129,6 @@ export class FormComponent implements OnInit, OnDestroy {
    */
   resetForm(): void {
     this.form.reset();
-    this.selectedImage = '';
   }
 
   /**

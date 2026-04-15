@@ -1,72 +1,133 @@
 <div class="form-container">
   <mat-card class="form-card">
     <mat-card-header>
-      <mat-card-title>Formulaire de Saisie</mat-card-title>
-      <mat-card-subtitle>Remplissez les champs ci-dessous</mat-card-subtitle>
+      <mat-card-title>Prédiction des Caractéristiques du Bébé</mat-card-title>
+      <mat-card-subtitle>Remplissez les informations ci-dessous</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
-      <!-- Section de sélection des images -->
-      <div class="image-selection-section">
-        <h3>Sélectionnez une catégorie</h3>
-        <div class="image-grid">
-          <mat-card
-            *ngFor="let image of categoryImages"
-            class="image-card"
-            [ngClass]="{ 'selected': selectedImage === image.value }"
-            (click)="selectImage(image)"
-          >
-            <div class="image-content" [style.background-color]="image.color">
-              <span class="image-icon">{{ image.icon }}</span>
-              <span class="image-label">{{ image.name }}</span>
-            </div>
-          </mat-card>
-        </div>
-      </div>
-
       <!-- Formulaire -->
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <!-- Champ Nom -->
+        
+        <!-- Section Parents -->
+        <h3>Informations des Parents</h3>
+        
+        <!-- Champ Prénom Parent -->
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Nom</mat-label>
-          <input matInput formControlName="name" placeholder="Entrez votre nom">
+          <mat-label>Prénom du Parent</mat-label>
+          <input matInput formControlName="firstName" placeholder="Ex: Jean">
           <mat-icon matSuffix>person</mat-icon>
-          <mat-error *ngIf="form.get('name')?.hasError('required')">
+          <mat-error *ngIf="form.get('firstName')?.hasError('required')">
+            Le prénom est obligatoire
+          </mat-error>
+          <mat-error *ngIf="form.get('firstName')?.hasError('minlength')">
+            Le prénom doit contenir au moins 2 caractères
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Champ Nom Parent -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nom du Parent</mat-label>
+          <input matInput formControlName="lastName" placeholder="Ex: Dupont">
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="form.get('lastName')?.hasError('required')">
             Le nom est obligatoire
           </mat-error>
-          <mat-error *ngIf="form.get('name')?.hasError('minlength')">
+          <mat-error *ngIf="form.get('lastName')?.hasError('minlength')">
             Le nom doit contenir au moins 2 caractères
           </mat-error>
         </mat-form-field>
 
-        <!-- Champ Email -->
+        <!-- Section Bébé -->
+        <h3>Informations du Bébé</h3>
+
+        <!-- Sexe du Bébé -->
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email" placeholder="votre.email@exemple.com" type="email">
-          <mat-icon matSuffix>email</mat-icon>
-          <mat-error *ngIf="form.get('email')?.hasError('required')">
-            L'email est obligatoire
-          </mat-error>
-          <mat-error *ngIf="form.get('email')?.hasError('email')">
-            Email invalide
+          <mat-label>Sexe du Bébé</mat-label>
+          <mat-select formControlName="babySex">
+            <mat-option *ngFor="let sex of sexOptions" [value]="sex.value">
+              {{ sex.icon }} {{ sex.label }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('babySex')?.hasError('required')">
+            Sélection obligatoire
           </mat-error>
         </mat-form-field>
 
-        <!-- Champ Téléphone -->
+        <!-- Nom du Bébé -->
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Téléphone</mat-label>
-          <input matInput formControlName="phone" placeholder="+33 6 12 34 56 78">
-          <mat-icon matSuffix>phone</mat-icon>
-          <mat-error *ngIf="form.get('phone')?.hasError('required')">
-            Le téléphone est obligatoire
+          <mat-label>Nom du Bébé</mat-label>
+          <input matInput formControlName="babyName" placeholder="Ex: Léa">
+          <mat-icon matSuffix>child_care</mat-icon>
+          <mat-error *ngIf="form.get('babyName')?.hasError('required')">
+            Le nom du bébé est obligatoire
           </mat-error>
-          <mat-error *ngIf="form.get('phone')?.hasError('pattern')">
-            Téléphone invalide
+          <mat-error *ngIf="form.get('babyName')?.hasError('minlength')">
+            Le nom doit contenir au moins 2 caractères
           </mat-error>
         </mat-form-field>
 
-        <!-- Champ Catégorie (caché) -->
-        <input type="hidden" formControlName="category">
+        <!-- Couleur des Yeux -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Couleur des Yeux</mat-label>
+          <mat-select formControlName="babyEyesColor">
+            <mat-option *ngFor="let color of eyeColors" [value]="color">
+              {{ color }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('babyEyesColor')?.hasError('required')">
+            Sélection obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Couleur des Cheveux -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Couleur des Cheveux</mat-label>
+          <mat-select formControlName="babyHairColor">
+            <mat-option *ngFor="let color of hairColors" [value]="color">
+              {{ color }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('babyHairColor')?.hasError('required')">
+            Sélection obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Date de Naissance -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Date de Naissance</mat-label>
+          <input matInput formControlName="babyBirthDate" type="date">
+          <mat-icon matSuffix>date_range</mat-icon>
+          <mat-error *ngIf="form.get('babyBirthDate')?.hasError('required')">
+            La date est obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Type de Cheveux -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Type de Cheveux</mat-label>
+          <mat-select formControlName="babyHairType">
+            <mat-option *ngFor="let type of hairTypes" [value]="type">
+              {{ type }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('babyHairType')?.hasError('required')">
+            Sélection obligatoire
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Poids du Bébé -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Poids du Bébé (kg)</mat-label>
+          <input matInput formControlName="babyWeight" placeholder="Ex: 3.5" type="number" step="0.1">
+          <mat-icon matSuffix>scale</mat-icon>
+          <mat-error *ngIf="form.get('babyWeight')?.hasError('required')">
+            Le poids est obligatoire
+          </mat-error>
+          <mat-error *ngIf="form.get('babyWeight')?.hasError('pattern')">
+            Format invalide (ex: 3.5)
+          </mat-error>
+        </mat-form-field>
 
         <!-- Boutons -->
         <div class="button-group">
