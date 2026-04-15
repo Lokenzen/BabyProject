@@ -35,7 +35,7 @@ import { takeUntil } from 'rxjs/operators';
   styleUrl: './results.component.scss'
 })
 export class ResultsComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['id', 'name', 'email', 'phone', 'category', 'timestamp', 'actions'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'babySex', 'babyName', 'babyEyesColor', 'babyHairColor', 'babyBirthDate', 'babyHairType', 'babyWeight'];
   dataSource!: MatTableDataSource<ResponseData>;
   isLoading = false;
   filterValue = '';
@@ -67,7 +67,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
           console.error('Erreur lors du chargement des données:', error);
           this.isLoading = false;
           // Afficher des données fictives en cas d'erreur
-          this.dataSource = new MatTableDataSource(this.getMockData());
+          this.dataSource = new MatTableDataSource();
         }
       });
   }
@@ -148,38 +148,6 @@ export class ResultsComponent implements OnInit, OnDestroy {
     if (!date) return '';
     const d = new Date(date);
     return d.toLocaleDateString('fr-FR') + ' ' + d.toLocaleTimeString('fr-FR');
-  }
-
-  /**
-   * Données fictives pour tester
-   */
-  private getMockData(): ResponseData[] {
-    return [
-      {
-        id: '1',
-        name: 'Jean Dupont',
-        email: 'jean.dupont@example.com',
-        phone: '+33 6 12 34 56 78',
-        category: 'personal',
-        timestamp: new Date('2024-01-15')
-      },
-      {
-        id: '2',
-        name: 'Marie Martin',
-        email: 'marie.martin@example.com',
-        phone: '+33 6 87 65 43 21',
-        category: 'professional',
-        timestamp: new Date('2024-01-14')
-      },
-      {
-        id: '3',
-        name: 'Pierre Bernard',
-        email: 'pierre.bernard@example.com',
-        phone: '+33 6 23 45 67 89',
-        category: 'other',
-        timestamp: new Date('2024-01-13')
-      }
-    ];
   }
 
   ngOnDestroy(): void {
