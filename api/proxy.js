@@ -1,8 +1,8 @@
 module.exports = async (req, res) => {
-  // ✅ CORS Headers - Très important!
+  // Activer CORS pour tous les domaines
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Content-Type', 'application/json');
 
   // Répondre aux requêtes OPTIONS (préflight CORS)
@@ -12,43 +12,27 @@ module.exports = async (req, res) => {
 
   try {
     // URL du Google Apps Script de destination
-    const gasUrl = 'https://script.google.com/macros/s/AKfycbzbriFJpvD6ujfFxqFkvkbQvgq7PzCY1mmsDc3wNkLcQDS5vuBWqKu4nM6Wd1Kd5Ynk/exec';
+    const gasUrl = 'https://script.google.com/macros/s/AKfycbz06FzRQe4zbWvGPpnXFe1w5amPCce421UkzmCLu1UbGHV3dhf3DoYxNGcKwZIYkcXb/exec';
 
-    // Convertir l'objet JSON en FormData (comme Angular l'envoie)
-    const params = new URLSearchParams();
-    if (req.body && typeof req.body === 'object') {
-      Object.keys(req.body).forEach(key => {
-        const value = req.body[key];
-        if (value != null && value !== '') {
-          params.append(key, String(value));
-        }
-      });
-    }
-
-    // Options de la requête
+    // Préparer les options de la requête
     const options = {
-      method: 'POST',
+      method: req.method,
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: params.toString()
+        'Content-Type': 'application/json'
+      }
     };
+
+    // Si POST/PUT/DELETE, inclure le body
+    if (req.method !== 'GET' && req.body) {
+      options.body = JSON.stringify(req.body);
+    }
 
     // Faire la requête au Google Apps Script
     const response = await fetch(gasUrl, options);
-    const data = await response.text();
+    const data = await response.json();
 
-    // Essayer de parser comme JSON, sinon retourner le texte brut
-    try {
-      const jsonData = JSON.parse(data);
-      res.status(response.status).json(jsonData);
-    } catch (e) {
-      res.status(response.status).json({ 
-        status: 'success',
-        message: 'Données envoyées',
-        raw: data
-      });
-    }
+    // Retourner la réponse
+    res.status(response.status).json(data);
 
   } catch (error) {
     console.error('Erreur proxy:', error);
