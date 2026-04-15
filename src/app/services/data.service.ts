@@ -23,8 +23,11 @@ export interface ResponseData {
   providedIn: 'root'
 })
 export class DataService {
-  // URL de l'API Google Apps Script
-  private readonly GOOGLE_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbz06FzRQe4zbWvGPpnXFe1w5amPCce421UkzmCLu1UbGHV3dhf3DoYxNGcKwZIYkcXb/exec';
+  // ✅ Utiliser le proxy (remplacer par ton URL Vercel déployée)
+  private readonly API_ENDPOINT = 'https://your-project.vercel.app/api/proxy';
+  
+  // Fallback: Direct GAS (ne marche qu'avec CORS proxy)
+  private readonly GOOGLE_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbzbriFJpvD6ujfFxqFkvkbQvgq7PzCY1mmsDc3wNkLcQDS5vuBWqKu4nM6Wd1Kd5Ynk/exec';
 
   constructor(private http: HttpClient) { }
 
@@ -47,27 +50,20 @@ export class DataService {
   }
 
   /**
-   * Envoyer les données via POST au Google Apps Script
-   * FormData contourne le préflight CORS
+   * Envoyer les données via POST au proxy backend
+   * Le proxy forwarde au Google Apps Script avec les headers CORS
    */
   sendData(data: ResponseData): Observable<any> {
-    const formData = this.objectToFormData(data);
-    
-    return this.http.post<any>(this.GOOGLE_APPS_SCRIPT, formData).pipe(
+    return this.http.post<any>(this.API_ENDPOINT, data).pipe(
       timeout(10000),
       retry(1),
       catchError((error) => {
         console.error('Erreur lors de l\'envoi des données:', error);
         
-        if (error.status === 401) {
-          console.error('401 Unauthorized: Le Google Apps Script a rejeté la requête');
-          console.warn('Vérifier: formulation du GAS, ou bien utiliser un backend proxy');
-          return throwError(() => error);
-        }
-        
         if (error.status === 0) {
-          console.warn('CORS Error: Le Google Apps Script n\'accepte pas cette requête');
-          console.warn('Solution: Mettez en place un backend proxy (voir BACKEND_PROXY_SETUP.md)');
+          console.error('CORS Error OR Proxy not deployed');
+          console.warn('⚠️ Déployer le proxy Vercel: npm install -g vercel && vercel deploy --prod');
+          return throwError(() => error);
           // Retourner un succès fictif pour UX
           return of({ success: true, message: 'Données envoyées (simulation)' });
         }
