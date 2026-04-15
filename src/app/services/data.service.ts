@@ -24,7 +24,7 @@ export interface ResponseData {
 })
 export class DataService {
   // URL de l'API Google Apps Script
-  private readonly GOOGLE_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbwnuuVV_JUcvk7dKesnQiOB4o9W3HdsenwOLbKfUxCup_ykHbF5it4D_CR51aqP48Py/exec';
+  private readonly GOOGLE_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbxEiQ8-aOtnPDm7VqvCukwOHaWK-mi2A24VIMuSGrAUsGuj0rCXGCWGaowq3NDK3Agv/exec';
 
   constructor(private http: HttpClient) { }
 
@@ -57,21 +57,7 @@ export class DataService {
       timeout(10000),
       retry(1),
       catchError((error) => {
-        console.error('Erreur lors de l\'envoi des données:', error);
-        
-        if (error.status === 401) {
-          console.error('401 Unauthorized: Le Google Apps Script a rejeté la requête');
-          console.warn('Vérifier: formulation du GAS, ou bien utiliser un backend proxy');
-          return throwError(() => error);
-        }
-        
-        if (error.status === 0) {
-          console.warn('CORS Error: Le Google Apps Script n\'accepte pas cette requête');
-          console.warn('Solution: Mettez en place un backend proxy (voir BACKEND_PROXY_SETUP.md)');
-          // Retourner un succès fictif pour UX
-          return of({ success: true, message: 'Données envoyées (simulation)' });
-        }
-        
+        console.error('Erreur lors de l\'envoi des données:', error);        
         return throwError(() => error);
       })
     );
@@ -82,12 +68,8 @@ export class DataService {
    * IMPORTANT: Implémentez un backend proxy pour cette fonctionnalité
    */
   getData(): Observable<ResponseData[]> {
-    console.warn('GET Request: Les proxies CORS publics sont instables');
-    console.warn('Solution: Utilisez un backend proxy Vercel (BACKEND_PROXY_SETUP.md)');
-    
-    // Retourner un tableau vide pour déclencher le message "aucune donnée"
-    // À remplacer par un vrai proxy backend pour production
-    return of([]);
+
+    return this.http.get<any[]>(this.GOOGLE_APPS_SCRIPT);
   }
 
   /**
