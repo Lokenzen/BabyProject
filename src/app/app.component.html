@@ -1,0 +1,42 @@
+﻿<!-- Toolbar de Navigation -->
+<mat-toolbar color="primary" class="app-toolbar">
+  <div class="toolbar-container">
+    <div class="toolbar-left">
+      <mat-icon class="app-icon">dashboard</mat-icon>
+      <span class="app-title">{{ title }}</span>
+    </div>
+
+    <div class="toolbar-right">
+      <button
+        mat-button
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-link"
+      >
+        <mat-icon>edit</mat-icon>
+        <span>Formulaire</span>
+      </button>
+
+      <button
+        mat-button
+        routerLink="/results"
+        routerLinkActive="active"
+        class="nav-link"
+      >
+        <mat-icon>view_list</mat-icon>
+        <span>Résultats</span>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>
+
+<!-- Contenu Principal -->
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
+
+<!-- Footer -->
+<footer class="app-footer">
+  <p>&copy; {{ currentYear }} GJProject. Tous droits réservés.</p>
+</footer>

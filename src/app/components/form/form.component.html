@@ -1,0 +1,98 @@
+<div class="form-container">
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-card-title>Formulaire de Saisie</mat-card-title>
+      <mat-card-subtitle>Remplissez les champs ci-dessous</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Section de sélection des images -->
+      <div class="image-selection-section">
+        <h3>Sélectionnez une catégorie</h3>
+        <div class="image-grid">
+          <mat-card
+            *ngFor="let image of categoryImages"
+            class="image-card"
+            [ngClass]="{ 'selected': selectedImage === image.value }"
+            (click)="selectImage(image)"
+          >
+            <div class="image-content" [style.background-color]="image.color">
+              <span class="image-icon">{{ image.icon }}</span>
+              <span class="image-label">{{ image.name }}</span>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+
+      <!-- Formulaire -->
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <!-- Champ Nom -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nom</mat-label>
+          <input matInput formControlName="name" placeholder="Entrez votre nom">
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="form.get('name')?.hasError('required')">
+            Le nom est obligatoire
+          </mat-error>
+          <mat-error *ngIf="form.get('name')?.hasError('minlength')">
+            Le nom doit contenir au moins 2 caractères
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Champ Email -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" placeholder="votre.email@exemple.com" type="email">
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-error *ngIf="form.get('email')?.hasError('required')">
+            L'email est obligatoire
+          </mat-error>
+          <mat-error *ngIf="form.get('email')?.hasError('email')">
+            Email invalide
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Champ Téléphone -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Téléphone</mat-label>
+          <input matInput formControlName="phone" placeholder="+33 6 12 34 56 78">
+          <mat-icon matSuffix>phone</mat-icon>
+          <mat-error *ngIf="form.get('phone')?.hasError('required')">
+            Le téléphone est obligatoire
+          </mat-error>
+          <mat-error *ngIf="form.get('phone')?.hasError('pattern')">
+            Téléphone invalide
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Champ Catégorie (caché) -->
+        <input type="hidden" formControlName="category">
+
+        <!-- Boutons -->
+        <div class="button-group">
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="!isFormValid() || isLoading"
+            class="submit-btn"
+          >
+            <mat-icon *ngIf="!isLoading" class="icon-left">send</mat-icon>
+            <mat-spinner *ngIf="isLoading" diameter="20" class="spinner-left"></mat-spinner>
+            {{ isLoading ? 'Envoi en cours...' : 'Valider' }}
+          </button>
+
+          <button
+            mat-stroked-button
+            type="button"
+            (click)="resetForm()"
+            [disabled]="isLoading"
+          >
+            <mat-icon class="icon-left">refresh</mat-icon>
+            Réinitialiser
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
