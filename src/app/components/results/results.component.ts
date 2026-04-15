@@ -35,7 +35,8 @@ import { takeUntil } from 'rxjs/operators';
   styleUrl: './results.component.scss'
 })
 export class ResultsComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['firstName', 'lastName', 'babySex', 'babyName', 'babyEyesColor', 'babyHairColor', 'babyBirthDate', 'babyHairType', 'babyWeight'];
+  // Colonnes en accord avec les données du formulaire
+  displayedColumns: string[] = ['name', 'email', 'phone', 'category', 'actions'];
   dataSource!: MatTableDataSource<ResponseData>;
   isLoading = false;
   filterValue = '';
@@ -60,14 +61,14 @@ export class ResultsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data: ResponseData[]) => {
-          this.dataSource = new MatTableDataSource(data);
+          this.dataSource = new MatTableDataSource<ResponseData>(data);
           this.isLoading = false;
         },
         error: (error) => {
           console.error('Erreur lors du chargement des données:', error);
           this.isLoading = false;
-          // Afficher des données fictives en cas d'erreur
-          this.dataSource = new MatTableDataSource();
+          // Afficher un tableau vide en cas d'erreur
+          this.dataSource = new MatTableDataSource<ResponseData>([]);
         }
       });
   }
@@ -104,7 +105,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
       return sort.direction === 'asc' ? compareValue : -compareValue;
     });
 
-    this.dataSource = new MatTableDataSource(data);
+    this.dataSource = new MatTableDataSource<ResponseData>(data);
   }
 
   /**
@@ -139,15 +140,6 @@ export class ResultsComponent implements OnInit, OnDestroy {
           }
         });
     }
-  }
-
-  /**
-   * Formater la date
-   */
-  formatDate(date: any): string {
-    if (!date) return '';
-    const d = new Date(date);
-    return d.toLocaleDateString('fr-FR') + ' ' + d.toLocaleTimeString('fr-FR');
   }
 
   ngOnDestroy(): void {
