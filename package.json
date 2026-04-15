@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && node copy-to-docs.js",
+    "build:prod": "ng build --configuration production --base-href \"/BabyProject/\" && node copy-to-docs.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

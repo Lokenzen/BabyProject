@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>GJProject</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+      // Redirect to index.html for SPA routing on GitHub Pages
+      var path = window.location.pathname;
+      var params = window.location.search;
+      
+      if (!path.includes('/BabyProject/')) {
+        path = '/BabyProject' + path;
+      }
+      
+      // Redirect 404s to the base URL with hash navigation for SPA routing
+      if (!path.endsWith('index.html') && !path.endsWith('.js') && !path.endsWith('.css') && !path.endsWith('.json') && !path.endsWith('.ico') && !path.endsWith('.woff2')) {
+        window.location.href = '/BabyProject/index.html#' + path.replace('/BabyProject', '') + params;
+      }
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
