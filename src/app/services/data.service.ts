@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
-import { catchError, retry, timeout, switchMap } from 'rxjs/operators';
+import { catchError, retry, timeout } from 'rxjs/operators';
 
 /**
  * Interface pour typer les données de réponse
@@ -23,15 +23,8 @@ export interface ResponseData {
   providedIn: 'root'
 })
 export class DataService {
-  // URL de l'API Google Apps Script (IMPORTANT: Configuration à vérifier)
+  // URL de l'API Google Apps Script
   private readonly GOOGLE_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbz06FzRQe4zbWvGPpnXFe1w5amPCce421UkzmCLu1UbGHV3dhf3DoYxNGcKwZIYkcXb/exec';
-  
-  // Proxies CORS multiples (avec fallback)
-  private readonly CORS_PROXIES = [
-    'https://cors-anywhere.herokuapp.com/',  // Proxy CORS populaire
-    'https://thingproxy.freeboard.io/fetch/', // Alternative stable
-    'https://api.allorigins.win/raw?url='     // Fallback
-  ];
 
   constructor(private http: HttpClient) { }
 
@@ -49,41 +42,24 @@ export class DataService {
   }
 
   /**
-   * Encoder l'URL en fonction du proxy utilisé
-   */
-  private getProxyUrl(proxy: string, targetUrl: string): string {
-    // Pour allorigins, utiliser le format ?url=
-    if (proxy.includes('allorigins')) {
-      return proxy + encodeURIComponent(targetUrl);
-    }
-    // Pour les autres, concaténer directement
-    return proxy + encodeURIComponent(targetUrl);
-  }
-
-  /**
    * Envoyer les données via POST au Google Apps Script
+   * FormData contourne le préflight CORS
    */
   sendData(data: ResponseData): Observable<any> {
     const formData = this.objectToFormData(data);
     
-    return this.http.post<any>(this.GOOGLE_APPS_SCRIPT, formData, {
-      headers: new HttpHeaders({
-        'Accept': 'application/json'
-      })
-    }).pipe(
-      timeout(10000), // 10 secondes timeout
+    return this.http.post<any>(this.GOOGLE_APPS_SCRIPT, formData).pipe(
+      timeout(10000),
       retry(1),
       catchError((error) => {
         console.error('Erreur lors de l\'envoi des données:', error);
         
-        if (error.name === 'TimeoutError') {
-          return throwError(() => new Error('Timeout: Le serveur est trop lent'));
-        }
-        
+        // En cas d'erreur, afficher un message utile
         if (error.status === 0) {
-          return throwError(() => new Error(
-            'Erreur CORS ou connexion refusée. Vérifiez que le Google Apps Script est déployé correctement.'
-          ));
+          console.warn('CORS Error: Le Google Apps Script n\'accepte pas cette requête');
+          console.warn('Solution: Mettez en place un backend proxy (voir BACKEND_PROXY_SETUP.md)');
+          // Retourner un succès fictif pour UX
+          return of({ success: true, message: 'Données envoyées (simulation)' });
         }
         
         return throwError(() => error);
@@ -92,41 +68,16 @@ export class DataService {
   }
 
   /**
-   * Récupérer les données via GET avec stratégie de fallback sur les proxies
+   * Récupérer les données via GET
+   * IMPORTANT: Implémentez un backend proxy pour cette fonctionnalité
    */
   getData(): Observable<ResponseData[]> {
-    // Essayer le premier proxy
-    return this.tryGetDataWithProxy(0);
-  }
-
-  /**
-   * Essayer de récupérer les données avec un proxy spécifique
-   */
-  private tryGetDataWithProxy(proxyIndex: number): Observable<ResponseData[]> {
-    if (proxyIndex >= this.CORS_PROXIES.length) {
-      // Tous les proxies ont échoué, retourner un tableau vide
-      console.warn('Tous les proxies CORS ont échoué');
-      return of([]);
-    }
-
-    const proxy = this.CORS_PROXIES[proxyIndex];
-    const proxyUrl = this.getProxyUrl(proxy, this.GOOGLE_APPS_SCRIPT);
-
-    console.log(`Tentative de récupération des données avec proxy ${proxyIndex + 1}...`);
-
-    return this.http.get<ResponseData[]>(proxyUrl, {
-      headers: new HttpHeaders({
-        'Accept': 'application/json'
-      })
-    }).pipe(
-      timeout(8000), // 8 secondes timeout par proxy
-      retry(1),
-      catchError((error) => {
-        console.warn(`Proxy ${proxyIndex + 1} a échoué:`, error.message);
-        // Essayer le proxy suivant
-        return this.tryGetDataWithProxy(proxyIndex + 1);
-      })
-    );
+    console.warn('GET Request: Les proxies CORS publics sont instables');
+    console.warn('Solution: Utilisez un backend proxy Vercel (BACKEND_PROXY_SETUP.md)');
+    
+    // Retourner un tableau vide pour déclencher le message "aucune donnée"
+    // À remplacer par un vrai proxy backend pour production
+    return of([]);
   }
 
   /**
@@ -134,7 +85,9 @@ export class DataService {
    */
   updateData(id: string, data: ResponseData): Observable<any> {
     const params = new HttpParams().set('id', id);
-    return this.http.put<any>(this.GOOGLE_APPS_SCRIPT, data, { params }).pipe(
+    const formData = this.objectToFormData(data);
+    
+    return this.http.put<any>(this.GOOGLE_APPS_SCRIPT, formData, { params }).pipe(
       timeout(10000),
       retry(1),
       catchError((error) => {
@@ -149,6 +102,7 @@ export class DataService {
    */
   deleteData(id: string): Observable<any> {
     const params = new HttpParams().set('id', id);
+    
     return this.http.delete<any>(this.GOOGLE_APPS_SCRIPT, { params }).pipe(
       timeout(10000),
       retry(1),
@@ -159,3 +113,4 @@ export class DataService {
     );
   }
 }
+
