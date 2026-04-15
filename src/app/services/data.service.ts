@@ -24,7 +24,7 @@ export interface ResponseData {
 })
 export class DataService {
   // URL de l'API Google Apps Script
-  private readonly GOOGLE_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbz06FzRQe4zbWvGPpnXFe1w5amPCce421UkzmCLu1UbGHV3dhf3DoYxNGcKwZIYkcXb/exec';
+  private readonly GOOGLE_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbwnuuVV_JUcvk7dKesnQiOB4o9W3HdsenwOLbKfUxCup_ykHbF5it4D_CR51aqP48Py/exec';
 
   constructor(private http: HttpClient) { }
 
