@@ -29,13 +29,18 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
   /**
-   * Convertir un objet en FormData
+   * Convertir un objet en FormData - Exclure les valeurs null/undefined
    */
   private objectToFormData(obj: any): FormData {
     const formData = new FormData();
     for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        formData.append(key, obj[key]);
+      if (obj.hasOwnProperty(key) && obj[key] != null && obj[key] !== '') {
+        // Convertir les dates au format ISO pour que le GAS les comprenne
+        if (obj[key] instanceof Date) {
+          formData.append(key, obj[key].toISOString());
+        } else {
+          formData.append(key, String(obj[key]));
+        }
       }
     }
     return formData;
@@ -54,7 +59,12 @@ export class DataService {
       catchError((error) => {
         console.error('Erreur lors de l\'envoi des données:', error);
         
-        // En cas d'erreur, afficher un message utile
+        if (error.status === 401) {
+          console.error('401 Unauthorized: Le Google Apps Script a rejeté la requête');
+          console.warn('Vérifier: formulation du GAS, ou bien utiliser un backend proxy');
+          return throwError(() => error);
+        }
+        
         if (error.status === 0) {
           console.warn('CORS Error: Le Google Apps Script n\'accepte pas cette requête');
           console.warn('Solution: Mettez en place un backend proxy (voir BACKEND_PROXY_SETUP.md)');
