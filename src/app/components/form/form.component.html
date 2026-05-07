@@ -1,49 +1,26 @@
 <div class="form-container">
   <mat-card class="form-card">
-    <mat-card-header>
+    <!--mat-card-header>
       <mat-card-title>Prédiction des Caractéristiques du Bébé</mat-card-title>
       <mat-card-subtitle>Remplissez les informations ci-dessous</mat-card-subtitle>
-    </mat-card-header>
+    </mat-card-header-->
 
     <mat-card-content>
       <!-- Formulaire -->
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         
-        <!-- Section Parents -->
-        <h3>Informations des Parents</h3>
-        
-        <!-- Champ Prénom Parent -->
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Prénom du Parent</mat-label>
-          <input matInput formControlName="firstName" placeholder="Ex: Jean">
-          <mat-icon matSuffix>person</mat-icon>
-          <mat-error *ngIf="form.get('firstName')?.hasError('required')">
-            Le prénom est obligatoire
-          </mat-error>
-          <mat-error *ngIf="form.get('firstName')?.hasError('minlength')">
-            Le prénom doit contenir au moins 2 caractères
-          </mat-error>
-        </mat-form-field>
-
-        <!-- Champ Nom Parent -->
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Nom du Parent</mat-label>
-          <input matInput formControlName="lastName" placeholder="Ex: Dupont">
-          <mat-icon matSuffix>person</mat-icon>
-          <mat-error *ngIf="form.get('lastName')?.hasError('required')">
-            Le nom est obligatoire
-          </mat-error>
-          <mat-error *ngIf="form.get('lastName')?.hasError('minlength')">
-            Le nom doit contenir au moins 2 caractères
-          </mat-error>
-        </mat-form-field>
-
-        <!-- Section Bébé -->
-        <h3>Informations du Bébé</h3>
-
         <!-- Sexe du Bébé -->
         <div class="baby-sex-section">
-          <label class="section-label">Sexe du Bébé</label>
+          <p class="section-description">
+            🎉 Le moment est venu de faire votre premier choix… 😏
+          </p>
+          <p class="section-description">
+            👉 À votre avis, qui se cache dans le ventre de maman ?
+          </p>
+          <p class="section-description">
+            💡 Réponse lors de la gender reveal le 27 juin 
+          </p>
+          <img src="./assets/img/GirlOrBoy.png" alt="Fille ou garçon ?" class="baby-question-image">
           <div class="sex-radio-group" [formGroup]="form">
             <div class="sex-radio-option">
               <input 
@@ -74,14 +51,28 @@
             Sélection obligatoire
           </mat-error>
         </div>
-
-        <!-- Nom du Bébé -->
+          <p class="section-description">
+            ✨ Et si on allait plus loin… ?
+            <br>
+            <br>
+            👉 Vous avez déjà tenté de deviner si bébé sera une fille ou un garçon… mais on ne va pas s’arrêter là 😏<br>
+            👉 Place aux paris les plus fous !<br>
+            Prénom, couleur des yeux, poids, taille à la naissance…<br>
+            On veut connaître toutes vos prédictions 👶💭<br>
+            Cette fois, il faudra être patients…<br>
+            Les réponses ne seront dévoilées qu’à la naissance de bébé (prévue le 11 octobre)<br>
+            Alors à vous de jouer et de laisser parler votre intuition 💕<br>
+            On a hâte de découvrir vos idées… et de voir qui sera le plus proche de la réalité 😄<br>
+            👉 Un podium des meilleurs devins sera dévoilé après la naissance… à vous de viser la première place 🏆<br>
+          </p>
+        <!--  Quel sera son prénom ? -->
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Nom du Bébé</mat-label>
-          <input matInput formControlName="babyName" placeholder="Ex: Léa">
+          <mat-label> Quel sera son prénom ? </mat-label>
+      
+          <input matInput formControlName="babyName" placeholder="👉 Écrivez votre idée juste ici">
           <mat-icon matSuffix>child_care</mat-icon>
           <mat-error *ngIf="form.get('babyName')?.hasError('required')">
-            Le nom du bébé est obligatoire
+            La suggestion de prénom est obligatoire
           </mat-error>
           <mat-error *ngIf="form.get('babyName')?.hasError('minlength')">
             Le nom doit contenir au moins 2 caractères
@@ -90,7 +81,7 @@
 
         <!-- Couleur des Yeux -->
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Couleur des Yeux</mat-label>
+          <mat-label>De quelle couleur seront ses yeux ?</mat-label>
           <mat-select formControlName="babyEyesColor">
             <mat-option *ngFor="let color of eyeColors" [value]="color">
               {{ color }}
@@ -115,6 +106,9 @@
         </mat-form-field>
 
         <!-- Date de Naissance -->
+         <p class="section-description">
+            Terme officiel : le 11 octobre ... Bébé sera t-il en avance ?
+          </p>
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Date de Naissance</mat-label>
           <input matInput formControlName="babyBirthDate" type="date">
@@ -138,6 +132,9 @@
         </mat-form-field>
 
         <!-- Poids du Bébé -->
+           <p class="section-description">
+            À votre avis, combien pèsera bébé à sa naissance?
+          </p>
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Poids du Bébé (kg)</mat-label>
           <input matInput formControlName="babyWeight" placeholder="Ex: 3.5" type="number" step="0.1">
@@ -149,6 +146,38 @@
             Format invalide (ex: 3.5)
           </mat-error>
         </mat-form-field>
+
+        <!-- Section Parents -->
+        <h3>Vos infos</h3>
+        <p class="section-description">
+            Afin d'enregistrer vos prédictions, et de pouvoir vous attribuer une place sur le podium des meilleurs devins, on a besoin de connaitre: 
+          </p>
+        <!-- Champ Prénom Parent -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Votre Prénom</mat-label>
+          <input matInput formControlName="firstName" placeholder="Ex: Jean">
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="form.get('firstName')?.hasError('required')">
+            Le prénom est obligatoire
+          </mat-error>
+          <mat-error *ngIf="form.get('firstName')?.hasError('minlength')">
+            Le prénom doit contenir au moins 2 caractères
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Champ Nom Parent -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Votre Nom</mat-label>
+          <input matInput formControlName="lastName" placeholder="Ex: Dupont">
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="form.get('lastName')?.hasError('required')">
+            Le nom est obligatoire
+          </mat-error>
+          <mat-error *ngIf="form.get('lastName')?.hasError('minlength')">
+            Le nom doit contenir au moins 2 caractères
+          </mat-error>
+        </mat-form-field>
+
 
         <!-- Boutons -->
         <div class="button-group">
