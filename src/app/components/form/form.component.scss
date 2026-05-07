@@ -98,6 +98,83 @@
     color: white;
     min-height: 120px;
     transition: filter 0.3s ease;
+  }
+}
+
+/* Baby Sex Selection Styles */
+.baby-sex-section {
+  margin-bottom: 2rem;
+
+  .section-label {
+    display: block;
+    margin-bottom: 1rem;
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 14px;
+    font-weight: 500;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+  }
+
+  .sex-error {
+    color: #f44336;
+    font-size: 12px;
+    margin-top: 0.5rem;
+    display: block;
+  }
+}
+
+.sex-radio-group {
+  display: flex;
+  gap: 2rem;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: flex-start;
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+  }
+}
+
+.sex-radio-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.sex-radio-input {
+  display: none;
+}
+
+.sex-radio-label {
+  display: block;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+
+  .sex-image {
+    width: 150px;
+    height: 150px;
+    display: block;
+    border: 3px solid transparent;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    object-fit: cover;
+
+    @media (max-width: 768px) {
+      width: 120px;
+      height: 120px;
+    }
+  }
+
+  &:hover .sex-image {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.sex-radio-input:checked + .sex-radio-label .sex-image {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2), 0 0 12px rgba(102, 126, 234, 0.4);
+  transform: scale(1.05);
 
     .image-icon {
       font-size: 2rem;

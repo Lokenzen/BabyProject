@@ -42,17 +42,38 @@
         <h3>Informations du Bébé</h3>
 
         <!-- Sexe du Bébé -->
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Sexe du Bébé</mat-label>
-          <mat-select formControlName="babySex">
-            <mat-option *ngFor="let sex of sexOptions" [value]="sex.value">
-              {{ sex.icon }} {{ sex.label }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="form.get('babySex')?.hasError('required')">
+        <div class="baby-sex-section">
+          <label class="section-label">Sexe du Bébé</label>
+          <div class="sex-radio-group" [formGroup]="form">
+            <div class="sex-radio-option">
+              <input 
+                type="radio" 
+                id="babyBoy" 
+                name="babySex" 
+                value="M" 
+                formControlName="babySex"
+                class="sex-radio-input">
+              <label for="babyBoy" class="sex-radio-label">
+                <img src="assets/img/Boy.png" alt="Garçon" class="sex-image">
+              </label>
+            </div>
+            <div class="sex-radio-option">
+              <input 
+                type="radio" 
+                id="babyGirl" 
+                name="babySex" 
+                value="F" 
+                formControlName="babySex"
+                class="sex-radio-input">
+              <label for="babyGirl" class="sex-radio-label">
+                <img src="assets/img/Fille.png" alt="Fille" class="sex-image">
+              </label>
+            </div>
+          </div>
+          <mat-error *ngIf="form.get('babySex')?.hasError('required')" class="sex-error">
             Sélection obligatoire
           </mat-error>
-        </mat-form-field>
+        </div>
 
         <!-- Nom du Bébé -->
         <mat-form-field appearance="outline" class="full-width">
