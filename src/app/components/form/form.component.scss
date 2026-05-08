@@ -1,124 +1,33 @@
-.form-container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: calc(100vh - 64px);
-  padding: 2rem 1rem;
-  //background: linear-gradient(90deg, #5a9b82 0%, #e6a9dd 100%);
-  background-color: #f5f5f5;
-
-  @media (max-width: 768px) {
-    padding: 1rem 0.5rem;
-  }
-}
-
-.mat-mdc-card {
-  background-color: #E4CEC0;
-}
-
-.form-card {
-  width: 100%;
-  max-width: 600px;
-  box-shadow: 0 10px 40px rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  animation: slideUp 0.5s ease-out;
-
-  mat-card-header {
-    background: linear-gradient(90deg, #5a9b82 0%, #e6a9dd 100%);
-    color: white;
-    padding: 1.5rem !important;
-    margin: -16px -16px 2rem -16px;
-    border-radius: 12px 12px 0 0;
-
-    mat-card-title {
-      font-size: 24px;
-      margin-bottom: 0.5rem;
-    }
-
-    mat-card-subtitle {
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 14px;
-    }
-  }
-
-  mat-card-content {
-    padding: 2rem;
-    background-color: #E4CEC0;
-
-    form > h3 {
-      color: #5a4a42;
-      font-weight: 600;
-      margin-top: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    form > h3:first-of-type {
-      margin-top: 0;
-    }
-
-    @media (max-width: 768px) {
-      padding: 1.5rem;
-    }
-  }
-}
-
-/* Image Selection Section */
-.image-selection-section {
+.hair-color-section,
+.hair-type-section,
+.eye-color-section {
   margin-bottom: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 
-  h3 {
+  .section-label {
+    display: block;
     margin-bottom: 1rem;
-    color: #333;
-    font-size: 16px;
+    color: #5a4a42;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+  }
+
+  .hair-color-error,
+  .hair-type-error,
+  .eye-color-error {
+    color: #c53030;
+    font-size: 12px;
+    margin-top: 0.5rem;
+    display: block;
     font-weight: 500;
   }
 }
 
-.image-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
-
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.image-card {
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: 3px solid transparent;
-  padding: 0 !important;
-  overflow: hidden;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  }
-
-  &.selected {
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-
-    .image-content {
-      filter: brightness(0.9);
-    }
-  }
-
-  .image-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem 1rem;
-    color: white;
-    min-height: 120px;
-    transition: filter 0.3s ease;
-  }
-}
-
-/* Baby Sex Selection Styles */
 .baby-sex-section {
   margin-bottom: 2rem;
   width: 100%;
@@ -136,13 +45,6 @@
     font-family: Roboto, "Helvetica Neue", sans-serif;
   }
 
-  .section-description {
-    color: #5a4a42;
-    font-size: 16px;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-  }
-
   .baby-question-image {
     max-width: 200px;
     margin-bottom: 1rem;
@@ -156,6 +58,30 @@
     display: block;
     font-weight: 500;
   }
+}
+
+.section-description {
+  color: #5a4a42;
+  font-size: 16px;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.5;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 1rem;
+  border-radius: 8px;
+  backdrop-filter: blur(2px);
+}
+
+.card {
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(2px);
+  padding: 1rem;
 }
 
 .sex-radio-group {
@@ -206,25 +132,124 @@
   }
 }
 
+.hair-color-section {
+  margin-bottom: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  .section-label {
+    display: block;
+    margin-bottom: 1rem;
+    color: #5a4a42;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+  }
+
+  .hair-color-error {
+    color: #c53030;
+    font-size: 12px;
+    margin-top: 0.5rem;
+    display: block;
+    font-weight: 500;
+  }
+}
+
+.hair-color-radio-group,
+.hair-type-radio-group,
+.eye-color-radio-group {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+  }
+}
+
+.hair-color-radio-option,
+.hair-type-radio-option,
+.eye-color-radio-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.hair-color-radio-input,
+.hair-type-radio-input,
+.eye-color-radio-input {
+  display: none;
+}
+
+.hair-color-radio-label,
+.hair-type-radio-label,
+.eye-color-radio-label {
+  display: block;
+  cursor: pointer;
+  position: relative;
+  transition: .3s ease;
+
+  &:hover img {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0,0,0,.15);
+  }
+}
+
+.hair-color-image,
+.hair-type-image,
+.eye-color-image {
+  display: block;
+  border: 3px solid transparent;
+  border-radius: 8px;
+  transition: .3s ease;
+  object-fit: cover;
+}
+
+.hair-color-image {
+  width: 100px;
+  height: 100px;
+
+  @media (max-width: 768px) {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.eye-color-image {
+  width: 100px;
+  height: 60px;
+
+  @media (max-width: 768px) {
+    width: 80px;
+    height: 50px;
+  }
+}
+
+.hair-type-image {
+  width: 100px;
+  height: 100px;
+
+  @media (max-width: 768px) {
+    width: 80px;
+    height: 120px;
+  }
+}
+
+.hair-color-radio-input:checked + .hair-color-radio-label .hair-color-image,
+.hair-type-radio-input:checked + .hair-type-radio-label .hair-type-image,
+.eye-color-radio-input:checked + .eye-color-radio-label .eye-color-image,
 .sex-radio-input:checked + .sex-radio-label .sex-image {
   border-color: #667eea;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2), 0 0 12px rgba(102, 126, 234, 0.4);
   transform: scale(1.05);
-
-    .image-icon {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .image-label {
-      font-size: 12px;
-      font-weight: 500;
-      text-align: center;
-    }
 }
 
 
-/* Form Fields */
 form {
   display: flex;
   flex-direction: column;
@@ -301,7 +326,7 @@ mat-form-field {
     }
   }
 }
-/* Button Group */
+
 .button-group {
   display: flex;
   gap: 1rem;
@@ -352,7 +377,7 @@ mat-form-field {
   height: 20px !important;
 }
 
-/* Animations */
+
 @keyframes slideUp {
   from {
     opacity: 0;

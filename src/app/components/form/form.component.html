@@ -8,175 +8,255 @@
     <mat-card-content>
       <!-- Formulaire -->
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <div class="baby-sex-section" #page0>
+          <p class="section-description full-width">
+            ✨ Bienvenue dans notre grand jeu des pronostics bébé ✨ <br>
+            Comme vous le savez peut-être déjà, nous attendons un petit bébé pour octobre ! <br>
+            Et avant de rencontrer notre mini-nous, on vous propose un petit défi : tenter de deviner tous ses secrets !<br>
+            <br>
+            Et comme le futur papa est développeur, on a même confectionné notre propre petit sondage en ligne pour l’occasion 👨‍💻<br>
+            <br>
+            Merci de participer à cette jolie aventure avec nous ! 💕
+          </p>
+        </div>
+
         
         <!-- Sexe du Bébé -->
-        <div class="baby-sex-section">
-          <p class="section-description">
+        <div class="baby-sex-section" #page1>
+          <p class="section-description full-width">
             🎉 Le moment est venu de faire votre premier choix… 😏
-          </p>
-          <p class="section-description">
+            <br>
             👉 À votre avis, qui se cache dans le ventre de maman ?
-          </p>
-          <p class="section-description">
+            <br>
+            <br>
             💡 Réponse lors de la gender reveal le 27 juin 
           </p>
-          <img src="./assets/img/GirlOrBoy.png" alt="Fille ou garçon ?" class="baby-question-image">
-          <div class="sex-radio-group" [formGroup]="form">
-            <div class="sex-radio-option">
-              <input 
-                type="radio" 
-                id="babyBoy" 
-                name="babySex" 
-                value="M" 
-                formControlName="babySex"
-                class="sex-radio-input">
-              <label for="babyBoy" class="sex-radio-label">
-                <img src="./assets/img/Boy.png" alt="Garçon" class="sex-image">
-              </label>
+
+          <div class="card full-width">
+            <img src="./assets/img/GirlOrBoy.png" alt="Fille ou garçon ?" class="baby-question-image">
+            <div class="sex-radio-group" [formGroup]="form">
+              <div class="sex-radio-option">
+                <input 
+                  type="radio" 
+                  id="babyGirl" 
+                  name="babySex" 
+                  value="F" 
+                  formControlName="babySex"
+                  class="sex-radio-input">
+                <label for="babyGirl" class="sex-radio-label">
+                  <img src="./assets/img/Fille.png" alt="Fille" class="sex-image">
+                </label>
+              </div>
+              <div class="sex-radio-option">
+                <input 
+                  type="radio" 
+                  id="babyBoy" 
+                  name="babySex" 
+                  value="M" 
+                  formControlName="babySex"
+                  class="sex-radio-input">
+                <label for="babyBoy" class="sex-radio-label">
+                  <img src="./assets/img/Boy.png" alt="Garçon" class="sex-image">
+                </label>
+              </div>
             </div>
-            <div class="sex-radio-option">
-              <input 
-                type="radio" 
-                id="babyGirl" 
-                name="babySex" 
-                value="F" 
-                formControlName="babySex"
-                class="sex-radio-input">
-              <label for="babyGirl" class="sex-radio-label">
-                <img src="./assets/img/Fille.png" alt="Fille" class="sex-image">
-              </label>
-            </div>
+            <mat-error *ngIf="form.get('babySex')?.hasError('required')" class="sex-error">
+              Sélection obligatoire
+            </mat-error>
           </div>
-          <mat-error *ngIf="form.get('babySex')?.hasError('required')" class="sex-error">
-            Sélection obligatoire
-          </mat-error>
         </div>
-          <p class="section-description">
-            ✨ Et si on allait plus loin… ?
-            <br>
-            <br>
-            👉 Vous avez déjà tenté de deviner si bébé sera une fille ou un garçon… mais on ne va pas s’arrêter là 😏<br>
-            👉 Place aux paris les plus fous !<br>
-            Prénom, couleur des yeux, poids, taille à la naissance…<br>
-            On veut connaître toutes vos prédictions 👶💭<br>
-            Cette fois, il faudra être patients…<br>
-            Les réponses ne seront dévoilées qu’à la naissance de bébé (prévue le 11 octobre)<br>
-            Alors à vous de jouer et de laisser parler votre intuition 💕<br>
-            On a hâte de découvrir vos idées… et de voir qui sera le plus proche de la réalité 😄<br>
-            👉 Un podium des meilleurs devins sera dévoilé après la naissance… à vous de viser la première place 🏆<br>
-          </p>
+
+        <p class="section-description full-width" #page2>
+          ✨ Et si on allait plus loin… ?
+          <br>
+          <br>
+          👉 Vous avez déjà tenté de deviner si bébé sera une fille ou un garçon… mais on ne va pas s’arrêter là 😏<br>
+          👉 Place aux paris les plus fous !<br>
+          Prénom, couleur des yeux, poids, taille à la naissance…<br>
+          On veut connaître toutes vos prédictions 👶💭<br>
+          <br>
+          Cette fois, il faudra être patients…<br>
+          Les réponses ne seront dévoilées qu’à la naissance de bébé (prévue le 11 octobre)<br>
+          Alors à vous de jouer et de laisser parler votre intuition 💕<br>
+          On a hâte de découvrir vos idées… et de voir qui sera le plus proche de la réalité 😄<br>
+          👉 Un podium des meilleurs devins sera dévoilé après la naissance… à vous de viser la première place 🏆<br>
+        </p>
         <!--  Quel sera son prénom ? -->
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label> Quel sera son prénom ? </mat-label>
-      
-          <input matInput formControlName="babyName" placeholder="👉 Écrivez votre idée juste ici">
-          <mat-icon matSuffix>child_care</mat-icon>
-          <mat-error *ngIf="form.get('babyName')?.hasError('required')">
-            La suggestion de prénom est obligatoire
-          </mat-error>
-          <mat-error *ngIf="form.get('babyName')?.hasError('minlength')">
-            Le nom doit contenir au moins 2 caractères
-          </mat-error>
-        </mat-form-field>
+        <div class="card full-width">
+          <h2>Le grand défi du prénom ! ✨</h2>
+          <p>
+            Comme on est sympas on vous laisse la possibilité de proposer un prénom fille et un prénom garçon<br>
+            …au cas où votre pronostic sur le sexe ne soit pas le bon 😉<br>
+          </p>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label> Quel sera son prénom si c'est une fille ? </mat-label>
+        
+            <input matInput formControlName="babyName" placeholder="👉 Écrivez votre idée juste ici">
+            <mat-icon matSuffix>child_care</mat-icon>
+            <mat-error *ngIf="form.get('babyName')?.hasError('required')">
+              La suggestion de prénom est obligatoire
+            </mat-error>
+            <mat-error *ngIf="form.get('babyName')?.hasError('minlength')">
+              Le nom doit contenir au moins 2 caractères
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label> Quel sera son prénom si c'est un garçon ? </mat-label>
+        
+            <input matInput formControlName="babyName" placeholder="👉 Écrivez votre idée juste ici">
+            <mat-icon matSuffix>child_care</mat-icon>
+            <mat-error *ngIf="form.get('babyName')?.hasError('required')">
+              La suggestion de prénom est obligatoire
+            </mat-error>
+            <mat-error *ngIf="form.get('babyName')?.hasError('minlength')">
+              Le nom doit contenir au moins 2 caractères
+            </mat-error>
+          </mat-form-field>
+        </div>
 
         <!-- Couleur des Yeux -->
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>De quelle couleur seront ses yeux ?</mat-label>
-          <mat-select formControlName="babyEyesColor">
-            <mat-option *ngFor="let color of eyeColors" [value]="color">
-              {{ color }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="form.get('babyEyesColor')?.hasError('required')">
-            Sélection obligatoire
-          </mat-error>
-        </mat-form-field>
+        <div class="card full-width" #page3>
+           <p>
+            Selon vous, de quelle couleur seront les yeux de bébé ? 👀
+          </p>
+          <div class="eye-color-section">
+            <label class="section-label">De quelle couleur seront ses yeux: {{eyesColorsSelected}}</label>
+            <div class="eye-color-radio-group" [formGroup]="form">
+              <div class="eye-color-radio-option" *ngFor="let color of eyesColors">
+                <input 
+                  type="radio" 
+                  [id]="'eye' + color.value" 
+                  name="babyEyesColor" 
+                  [value]="color.value" 
+                  formControlName="babyEyesColor"
+                  class="eye-color-radio-input"
+                  (change)="onEyeColorChange(color.label)">
+                <label [for]="'eye' + color.value" class="eye-color-radio-label">
+                  <img [src]="'./assets/img/' + color.image" [alt]="color.label" class="eye-color-image">
+                </label>
+              </div>
+            </div>
+            <mat-error *ngIf="form.get('babyEyesColor')?.hasError('required')" class="eye-color-error">
+              Sélection obligatoire
+            </mat-error>
+          </div>
+        </div>
 
         <!-- Couleur des Cheveux -->
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Couleur des Cheveux</mat-label>
-          <mat-select formControlName="babyHairColor">
-            <mat-option *ngFor="let color of hairColors" [value]="color">
-              {{ color }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="form.get('babyHairColor')?.hasError('required')">
-            Sélection obligatoire
-          </mat-error>
-        </mat-form-field>
-
-        <!-- Date de Naissance -->
-         <p class="section-description">
-            Terme officiel : le 11 octobre ... Bébé sera t-il en avance ?
-          </p>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Date de Naissance</mat-label>
-          <input matInput formControlName="babyBirthDate" type="date">
-          <mat-icon matSuffix>date_range</mat-icon>
-          <mat-error *ngIf="form.get('babyBirthDate')?.hasError('required')">
-            La date est obligatoire
-          </mat-error>
-        </mat-form-field>
+        <div class="card full-width" #page4>
+          <div class="hair-color-section">
+            <label class="section-label">De quelle couleur seront ses cheveux: {{hairsColorsSelected}}</label>
+            <div class="hair-color-radio-group" [formGroup]="form">
+              <div class="hair-color-radio-option" *ngFor="let color of hairColors">
+                <input 
+                  type="radio" 
+                  [id]="'hair' + color.value" 
+                  name="babyHairColor" 
+                  [value]="color.value" 
+                  formControlName="babyHairColor"
+                  class="hair-color-radio-input"
+                  (change)="onHairColorChange(color.label)">
+                <label [for]="'hair' + color.value" class="hair-color-radio-label">
+                  <img [src]="'./assets/img/' + color.image" [alt]="color.label" class="hair-color-image">
+                </label>
+              </div>
+            </div>
+            <mat-error *ngIf="form.get('babyHairColor')?.hasError('required')" class="hair-color-error">
+              Sélection obligatoire
+            </mat-error>
+          </div>
+        </div>
 
         <!-- Type de Cheveux -->
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Type de Cheveux</mat-label>
-          <mat-select formControlName="babyHairType">
-            <mat-option *ngFor="let type of hairTypes" [value]="type">
-              {{ type }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="form.get('babyHairType')?.hasError('required')">
-            Sélection obligatoire
-          </mat-error>
-        </mat-form-field>
+        <div class="card full-width" #page5>
+          <div class="hair-type-section">
+            <label class="section-label">Type de Cheveux: {{hairsTypesSelected}}</label>
+            <div class="hair-type-radio-group" [formGroup]="form">
+              <div class="hair-type-radio-option" *ngFor="let type of hairTypes">
+                <input 
+                type="radio" 
+                [id]="'hairType' + type.value" 
+                name="babyHairType" 
+                [value]="type.value" 
+                formControlName="babyHairType"
+                class="hair-type-radio-input"
+                (change)="onHairTypeChange(type.label)">
+              <label [for]="'hairType' + type.value" class="hair-type-radio-label">
+                <img [src]="'./assets/img/' + type.image" [alt]="type.label" class="hair-type-image">
+              </label>
+              </div>
+            </div>
+            <mat-error *ngIf="form.get('babyHairType')?.hasError('required')" class="hair-type-error">
+              Sélection obligatoire
+            </mat-error>
+          </div>
+        </div>
 
         <!-- Poids du Bébé -->
-           <p class="section-description">
+        <div class="card full-width" #page6>
+           <p>
             À votre avis, combien pèsera bébé à sa naissance?
           </p>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Poids du Bébé (kg)</mat-label>
-          <input matInput formControlName="babyWeight" placeholder="Ex: 3.5" type="number" step="0.1">
-          <mat-icon matSuffix>scale</mat-icon>
-          <mat-error *ngIf="form.get('babyWeight')?.hasError('required')">
-            Le poids est obligatoire
-          </mat-error>
-          <mat-error *ngIf="form.get('babyWeight')?.hasError('pattern')">
-            Format invalide (ex: 3.5)
-          </mat-error>
-        </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Poids du Bébé (kg)</mat-label>
+            <input matInput formControlName="babyWeight" placeholder="Ex: 3.5" type="number" step="0.1">
+            <mat-icon matSuffix>scale</mat-icon>
+            <mat-error *ngIf="form.get('babyWeight')?.hasError('required')">
+              Le poids est obligatoire
+            </mat-error>
+            <mat-error *ngIf="form.get('babyWeight')?.hasError('pattern')">
+              Format invalide (ex: 3.5)
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- Date de Naissance -->
+        <div class="card full-width" #page7>
+         <p>
+            Terme officiel : le <b>11 octobre</b> ... Bébé sera t-il en avance ?
+          </p>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Date de Naissance</mat-label>
+            <input matInput formControlName="babyBirthDate" type="date">
+            <mat-error *ngIf="form.get('babyBirthDate')?.hasError('required')">
+              La date est obligatoire
+            </mat-error>
+          </mat-form-field>
+        </div>
 
         <!-- Section Parents -->
-        <h3>Vos infos</h3>
-        <p class="section-description">
-            Afin d'enregistrer vos prédictions, et de pouvoir vous attribuer une place sur le podium des meilleurs devins, on a besoin de connaitre: 
-          </p>
-        <!-- Champ Prénom Parent -->
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Votre Prénom</mat-label>
-          <input matInput formControlName="firstName" placeholder="Ex: Jean">
-          <mat-icon matSuffix>person</mat-icon>
-          <mat-error *ngIf="form.get('firstName')?.hasError('required')">
-            Le prénom est obligatoire
-          </mat-error>
-          <mat-error *ngIf="form.get('firstName')?.hasError('minlength')">
-            Le prénom doit contenir au moins 2 caractères
-          </mat-error>
-        </mat-form-field>
+        <div class="card full-width" #page8>
+          <h3>Vos infos</h3>
+          <p>
+              Afin d'enregistrer vos prédictions, et de pouvoir vous attribuer une place sur le podium des meilleurs devins, on a besoin de connaitre: 
+            </p>
+          <!-- Champ Prénom -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Votre Prénom</mat-label>
+            <input matInput formControlName="firstName" placeholder="Ex: Jean">
+            <mat-icon matSuffix>person</mat-icon>
+            <mat-error *ngIf="form.get('firstName')?.hasError('required')">
+              Le prénom est obligatoire
+            </mat-error>
+            <mat-error *ngIf="form.get('firstName')?.hasError('minlength')">
+              Le prénom doit contenir au moins 2 caractères
+            </mat-error>
+          </mat-form-field>
 
-        <!-- Champ Nom Parent -->
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Votre Nom</mat-label>
-          <input matInput formControlName="lastName" placeholder="Ex: Dupont">
-          <mat-icon matSuffix>person</mat-icon>
-          <mat-error *ngIf="form.get('lastName')?.hasError('required')">
-            Le nom est obligatoire
-          </mat-error>
-          <mat-error *ngIf="form.get('lastName')?.hasError('minlength')">
-            Le nom doit contenir au moins 2 caractères
-          </mat-error>
-        </mat-form-field>
+          <!-- Champ Nom -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Votre Nom</mat-label>
+            <input matInput formControlName="lastName" placeholder="Ex: Dupont">
+            <mat-icon matSuffix>person</mat-icon>
+            <mat-error *ngIf="form.get('lastName')?.hasError('required')">
+              Le nom est obligatoire
+            </mat-error>
+            <mat-error *ngIf="form.get('lastName')?.hasError('minlength')">
+              Le nom doit contenir au moins 2 caractères
+            </mat-error>
+          </mat-form-field>
+        </div>
 
 
         <!-- Boutons -->
