@@ -75,18 +75,19 @@ export class DataService {
   /**
    * Mettre à jour une donnée via PUT
    */
-  updateData(id: string, data: ResponseData): Observable<any> {
+  updateData(id: string, data: ResponseData) {
     const params = new HttpParams().set('id', id);
     const formData = this.objectToFormData(data);
     
-    return this.http.put<any>(this.GOOGLE_APPS_SCRIPT, formData, { params }).pipe(
-      timeout(10000),
-      retry(1),
-      catchError((error) => {
-        console.error('Erreur lors de la mise à jour:', error);
-        return throwError(() => error);
-      })
-    );
+    this.http.post(this.GOOGLE_APPS_SCRIPT, formData, { responseType: 'text' })
+    .subscribe({
+      next: (res) => console.log('Succès !', res),
+      error: (err) => {
+        // Si le status est 0 mais que la ligne apparaît dans Google Sheet, 
+        // c'est juste le navigateur qui fait son timide.
+        console.error('Erreur CORS mais vérifiez votre Sheet !', err);
+      }
+    });
   }
 
   /**
