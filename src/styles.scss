@@ -22,7 +22,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .form-card {
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   height: 100vh;
   box-shadow: 0 10px 40px rgba(255,255,255,.2);
   border-radius: 12px;
@@ -75,3 +75,70 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     }
   }
 }
+
+.mat-step-header {
+  display: none !important;
+}
+.mat-vertical-stepper-header {
+  display: none !important;
+}
+
+.mat-vertical-content-container {
+  margin-left: 0 !important;
+}
+
+.mat-vertical-content {
+  padding: 24px !important;
+}
+
+.mat-mdc-form-field-infix {
+  padding-left: 1rem !important;
+}
+
+.slider-wrapper {
+  text-align: center;
+  padding: 20px;
+
+  h3 {
+    color: #555;
+    margin-bottom: 10px;
+  }
+
+  .weight-display {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #40E0D0; /* Ton turquoise */
+    margin-bottom: 20px;
+  }
+
+  .custom-slider {
+    width: 90%;
+    /* On agrandit la zone d'interaction */
+    height: 48px;
+    margin: 10px 0;
+  }
+
+  .slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: -10px;
+  }
+}
+
+.slider-container {
+  padding: 15px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Customisation de la couleur du slider Material */
+::ng-deep .mat-mdc-slider {
+  --mdc-slider-active-track-color: #40E0D0;
+  --mdc-slider-inactive-track-color: rgba(64, 224, 208, 0.2);
+  --mdc-slider-handle-color: #40E0D0;
+  --mdc-slider-hover-handle-color: #40E0D0;
+}
+
