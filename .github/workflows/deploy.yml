@@ -22,7 +22,8 @@ jobs:
       - name: Build
         # Remplace 'BabyProject' par le nom exact de ton projet dans angular.json
         run: npx ng build --configuration production --base-href /BabyProject/
-
+      - name: Fix 404 for Angular Routing
+        run: cp dist/BabyProject/browser/index.html dist/BabyProject/browser/404.html
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
