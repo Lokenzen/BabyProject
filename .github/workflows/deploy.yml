@@ -2,7 +2,7 @@ name: Build and Deploy Angular
 on:
   push:
     branches:
-      - main # Change en 'master' si c'est le nom de ta branche principale
+      - main 
 
 jobs:
   build-and-deploy:
@@ -14,18 +14,21 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20 # Utilisation d'une version stable récente
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build
-        # Remplace 'BabyProject' par le nom exact de ton projet dans angular.json
+        # On garde le base-href avec le nom de ton dépôt GitHub
         run: npx ng build --configuration production --base-href /BabyProject/
+
       - name: Fix 404 for Angular Routing
-        run: cp dist/BabyProject/browser/index.html dist/BabyProject/browser/404.html
+        # On utilise le chemin exact que tu as identifié
+        run: cp dist/baby-project/browser/index.html dist/baby-project/browser/404.html
+
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist/BabyProject/browser # Chemin vers ton build Angular 17+
-          branch: gh-pages # La branche où le site sera hébergé
+          folder: dist/baby-project/browser
+          branch: gh-pages
