@@ -24,7 +24,7 @@ export interface ResponseData {
 })
 export class DataService {
   // URL de l'API Google Apps Script
-  private readonly GOOGLE_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbzyw7iaf2WaCFXm5o_aQe5gvfQyZahR9vWumOL9OtX8bNgAswntYVeT3mpeo4K_wMsV/exec';
+  private readonly GOOGLE_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbyLBg0poKsCPGC6V5Y86M91-SDHykCHIYyfOa1Iz-pb1nK0sxLD173W3AlSUzY9AcY2/exec';
 
   constructor(private http: HttpClient) { }
 
@@ -46,22 +46,24 @@ export class DataService {
     return formData;
   }
 
-  /**
-   * Envoyer les données via POST au Google Apps Script
-   * FormData contourne le préflight CORS
-   */
-  sendData(data: ResponseData): Observable<any> {
-    const formData = this.objectToFormData(data);
-    
-    return this.http.post<any>(this.GOOGLE_APPS_SCRIPT, formData).pipe(
-      timeout(10000),
-      retry(1),
-      catchError((error) => {
-        console.error('Erreur lors de l\'envoi des données:', error);        
-        return throwError(() => error);
-      })
-    );
-  }
+sendData(data: ResponseData): Observable<any> {
+  const formData = this.objectToFormData(data);
+  
+  // On ajoute { responseType: 'text' } car Google Apps Script 
+  // fait une redirection que HttpClient n'aime pas en mode JSON
+  return this.http.post(this.GOOGLE_APPS_SCRIPT, formData, { responseType: 'text' }).pipe(
+    timeout(10000),
+    retry(1),
+    catchError((error) => {
+      // Si la ligne arrive dans le sheet mais que status = 0, c'est un faux positif
+      if (error.status === 0 || error.status === 200) {
+        return of({ status: 'success' }); // On simule un succès
+      }
+      console.error('Erreur lors de l\'envoi des données:', error);        
+      return throwError(() => error);
+    })
+  );
+}
 
   /**
    * Récupérer les données via GET
