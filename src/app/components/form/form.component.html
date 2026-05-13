@@ -70,9 +70,6 @@
                     </label>
                   </div>
                 </div>
-                <mat-error *ngIf="form.get('babySex')?.hasError('required')" class="sex-error">
-                  Sélection obligatoire
-                </mat-error>
               </div>
             </div>
           </div>
@@ -156,9 +153,6 @@
                     </label>
                   </div>
                 </div>
-                <mat-error *ngIf="form.get('babyEyesColor')?.hasError('required')" class="eye-color-error">
-                  Sélection obligatoire
-                </mat-error>
               </div>
             </div>
           </div>
@@ -188,9 +182,6 @@
                     </label>
                   </div>
                 </div>
-                <mat-error *ngIf="form.get('babyHairColor')?.hasError('required')" class="hair-color-error">
-                  Sélection obligatoire
-                </mat-error>
               </div>
             </div>
           </div>
@@ -220,9 +211,6 @@
                     </label>
                   </div>
                 </div>
-                <mat-error *ngIf="form.get('babyHairType')?.hasError('required')" class="hair-type-error">
-                  Sélection obligatoire
-                </mat-error>
               </div>
             </div>
           </div>
@@ -293,10 +281,6 @@
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                 <!-- touchUi="true" est magique pour le mobile ! -->
                 <mat-datepicker #picker touchUi="true"></mat-datepicker>
-                
-                <mat-error *ngIf="form.get('babyBirthDate')?.hasError('required')">
-                  La date est obligatoire
-                </mat-error>
               </mat-form-field>
               
               <p class="date-confirmation" *ngIf="form.get('babyBirthDate')?.value">
@@ -438,8 +422,7 @@
       (click)="goToPreviousStep()"
       [disabled]="isFirstStep()"
       class="nav-button prev-button">
-      <mat-icon>arrow_back</mat-icon>
-      Précédent
+      <mat-icon>arrow_back_ios</mat-icon>
     </button>
 
     <button
@@ -449,8 +432,7 @@
       (click)="goToNextStep()"
       *ngIf="!isLastStep()"
       class="nav-button next-button">
-      Suivant
-      <mat-icon>arrow_forward</mat-icon>
+      <mat-icon>arrow_forward_ios</mat-icon>
     </button>
 
      <button

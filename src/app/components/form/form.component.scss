@@ -559,7 +559,6 @@ $error-color: #c53030;
   flex-wrap: wrap;
 
   @media (max-width: 600px) {
-    flex-direction: column;
     gap: 0.75rem;
   }
 }
@@ -594,14 +593,19 @@ $error-color: #c53030;
     cursor: not-allowed;
   }
 
+  & .mat-icon {
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+
   @media (max-width: 600px) {
-    width: 100%;
+    width: 40%;
     min-width: auto;
   }
 }
 
 .prev-button {
-  background: $secondary-pastel;
+  background: $secondary-pastel !important;
   color: #fff;
 
   &:hover:not(:disabled) {
@@ -610,7 +614,7 @@ $error-color: #c53030;
 }
 
 .next-button {
-  background: $primary-pastel;
+  background: $primary-pastel !important;
   color: #fff;
 
   &:hover:not(:disabled) {

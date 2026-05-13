@@ -21,7 +21,7 @@ jobs:
 
       - name: Build
         # On garde le base-href avec le nom de ton dépôt GitHub
-        run: npx ng build --configuration production --base-href /BabyProject/
+        run: npx ng build --configuration production --base-href /
 
       - name: Fix 404 for Angular Routing
         # On utilise le chemin exact que tu as identifié
