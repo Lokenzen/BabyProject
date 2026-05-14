@@ -24,6 +24,6 @@ export class SuccessDialogComponent {
   }
 
   onGoToSite() {
-    window.open('https://ton-autre-site.com', '_blank');
+    window.open('https://minipouce.fr/ocetom', '_blank');
   }
 }

@@ -1,13 +1,15 @@
 <div class="dialog-container">
   <h2 mat-dialog-title>✨ Merci beaucoup ! ✨</h2>
   <mat-dialog-content>
-    <p>Tes pronostics ont bien été enregistrés dans notre grimoire magique. 📖</p>
-    <p>On a hâte de voir si tu avais raison !</p>
+    <div class="stepper-content">
+        <p>Tes pronostics ont bien été enregistrés dans notre grimoire magique. 📖</p>
+        <p>On a hâte de voir si tu avais raison !</p>
+    </div>    
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <!-- Bouton pour recommencer (reset) -->
     <button mat-button (click)="onReset()">Refaire un pronostic</button>
     <!-- Bouton pour voir un autre site -->
-    <button mat-raised-button color="accent" (click)="onGoToSite()">Voir notre blog</button>
+    <button mat-raised-button color="accent" (click)="onGoToSite()">Voir notre liste de naissance</button>
   </mat-dialog-actions>
 </div>

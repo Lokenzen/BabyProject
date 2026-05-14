@@ -42,7 +42,8 @@ $error-color: #c53030;
 
   @media (max-width: 768px) {
     padding: 1rem;
-    min-height: calc(100vh - 140px);
+    min-height: calc(100vh);
+    margin-top: 0;
   }
 }
 
