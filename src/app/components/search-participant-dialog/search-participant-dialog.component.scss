@@ -1,0 +1,227 @@
+// ===========================
+// VARIABLES - Baby-Chic Colors
+// ===========================
+$primary-pastel: #FFB6D9;    // Rose pastel
+$secondary-pastel: #A3D5FF;  // Bleu pastel
+$accent-pastel: #FFE4B5;     // Orange pastel
+$soft-white: rgba(255, 255, 255, 0.95);
+$glass-bg: rgba(255, 255, 255, 0.7);
+$glass-border: rgba(255, 255, 255, 0.3);
+$text-dark: #5a4a42;
+$error-color: #c53030;
+
+// ===========================
+// DIALOG STYLES
+// ===========================
+.search-dialog {
+  h2[mat-dialog-title] {
+    margin-bottom: 16px;
+    font-size: 24px;
+    font-weight: 700;
+    color: $text-dark;
+    background: linear-gradient(135deg, $primary-pastel, $secondary-pastel);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .intro-text {
+    margin-bottom: 24px;
+    color: $text-dark;
+    line-height: 1.6;
+    font-size: 15px;
+    padding: 12px;
+    background: $glass-bg;
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid $glass-border;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .full-width {
+    width: 100%;
+
+    ::ng-deep {
+      .mdc-text-field {
+        background: $glass-bg;
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.85);
+        }
+      }
+
+      .mat-mdc-form-field-label {
+        color: $text-dark !important;
+      }
+
+      .mat-mdc-text-field-wrapper {
+        padding-bottom: 0;
+      }
+
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: rgba(255, 182, 217, 0.3) !important;
+      }
+
+      .mat-mdc-form-field-focus-overlay {
+        background-color: rgba(255, 182, 217, 0.04) !important;
+      }
+
+      .mdc-text-field--filled {
+        background-color: transparent;
+      }
+    }
+  }
+
+  .error-message {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(244, 67, 54, 0.1);
+    border-left: 4px solid $error-color;
+    border-radius: 8px;
+    color: $error-color;
+    margin: 12px 0;
+    animation: slideInDown 0.3s ease-out;
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    span {
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 24px;
+    background: $glass-bg;
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid $glass-border;
+
+    p {
+      color: $text-dark;
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+
+  [mat-dialog-actions] {
+    padding-top: 24px;
+    gap: 12px;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+    button {
+      min-width: 100px;
+      border-radius: 24px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease-in-out;
+      padding: 10px 24px;
+
+      &[mat-button] {
+        background: $glass-bg;
+        backdrop-filter: blur(10px);
+        color: $text-dark;
+        border: 1px solid $glass-border;
+
+        &:hover:not(:disabled) {
+          background: rgba(255, 255, 255, 0.9);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+          transform: translateY(-2px);
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+
+      &[mat-raised-button] {
+        background: linear-gradient(135deg, $primary-pastel, $secondary-pastel) !important;
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(255, 182, 217, 0.3);
+
+        &:hover:not(:disabled) {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(255, 182, 217, 0.4);
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      }
+
+      mat-icon {
+        margin-right: 6px;
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+
+      .spinner-inline {
+        display: inline-block;
+        margin-right: 6px;
+      }
+    }
+  }
+}
+
+// ===========================
+// RESPONSIVE DESIGN
+// ===========================
+@media (max-width: 500px) {
+  .search-dialog {
+    h2[mat-dialog-title] {
+      font-size: 20px;
+    }
+
+    .intro-text {
+      font-size: 14px;
+      padding: 10px;
+    }
+
+    [mat-dialog-actions] {
+      flex-direction: column;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
+

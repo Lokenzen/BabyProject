@@ -1,0 +1,68 @@
+<div class="search-dialog">
+  <h2 mat-dialog-title>Déjà voté ?</h2>
+  
+  <div mat-dialog-content>
+    <p class="intro-text">
+      Vous avez déjà participé au sondage ? Entrez votre nom et prénom pour retrouver vos réponses !
+    </p>
+
+    <form [formGroup]="form" (ngSubmit)="onSearch()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Prénom</mat-label>
+        <input 
+          matInput 
+          formControlName="firstName"
+          placeholder="Votre prénom"
+          [disabled]="isSearching"
+          autofocus>
+        <mat-icon matPrefix>person</mat-icon>
+        <mat-error *ngIf="form.get('firstName')?.touched">
+          {{ getErrorMessage('firstName') }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nom</mat-label>
+        <input 
+          matInput 
+          formControlName="lastName"
+          placeholder="Votre nom"
+          [disabled]="isSearching">
+        <mat-icon matPrefix>person</mat-icon>
+        <mat-error *ngIf="form.get('lastName')?.touched">
+          {{ getErrorMessage('lastName') }}
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Message d'erreur -->
+      <div *ngIf="errorMessage" class="error-message">
+        <mat-icon>error</mat-icon>
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <!-- Message de chargement -->
+      <div *ngIf="isSearching" class="loading-container">
+        <mat-spinner diameter="30"></mat-spinner>
+        <p>Recherche en cours...</p>
+      </div>
+    </form>
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button 
+      mat-button 
+      (click)="onCancel()"
+      [disabled]="isSearching">
+      Annuler
+    </button>
+    <button 
+      mat-raised-button 
+      color="primary"
+      (click)="onSearch()"
+      [disabled]="!form.valid || isSearching">
+      <mat-icon *ngIf="!isSearching">search</mat-icon>
+      <mat-spinner *ngIf="isSearching" diameter="20" class="spinner-inline"></mat-spinner>
+      {{ isSearching ? 'Recherche...' : 'Rechercher' }}
+    </button>
+  </div>
+</div>

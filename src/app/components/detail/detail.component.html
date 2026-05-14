@@ -1,0 +1,116 @@
+<div class="detail-container">
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="spinner-container">
+    <mat-spinner></mat-spinner>
+    <p>Chargement des données...</p>
+  </div>
+
+  <!-- Error Message -->
+  <mat-card *ngIf="errorMessage && !isLoading" class="error-card">
+    <mat-card-header>
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <mat-card-title>Erreur</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ errorMessage }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Retour
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <!-- Person Data Card -->
+  <mat-card *ngIf="personData && !isLoading" class="detail-card">
+    <mat-card class="detail-card">
+        <div class="header-container">
+            <!-- Zone Image -->
+            <div class="gender-sidebar" [ngClass]="personData.babySex">
+            <img [src]="personData.babySex === 'Boy' ? 'assets/Boy.png' : 'assets/Fille.png'" 
+                class="gender-icon">
+            </div>
+
+            <!-- Zone Texte -->
+            <div class="header-text">
+            <mat-card-header>
+                <mat-card-title>{{ personData.firstName }} {{ personData.lastName }}</mat-card-title>
+                <mat-card-subtitle>Détails de la personne</mat-card-subtitle>
+            </mat-card-header>
+            </div>
+        </div>
+    </mat-card> 
+
+    <mat-card-content>
+      <div class="info-grid">
+        <!-- Informations personnelles -->
+        <div class="section">
+          <h3>Informations Personnelles</h3>
+          <div class="info-row">
+            <span class="label">Prénom:</span>
+            <span class="value">{{ personData.firstName }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Nom:</span>
+            <span class="value">{{ personData.lastName }}</span>
+          </div>
+        </div>
+
+        <!-- Informations du bébé -->
+        <div class="section" *ngIf="personData.babyName">
+          <h3>Informations du Bébé</h3>
+          <div class="info-row">
+            <span class="label">Nom:</span>
+            <span class="value">{{ personData.babyName }}</span>
+          </div>
+          <div class="info-row" *ngIf="personData.babySex">
+            <span class="label">Sexe:</span>
+            <span class="value">{{ personData.babySex }}</span>
+          </div>
+          <div class="info-row" *ngIf="personData.babyBirthDate">
+            <span class="label">Date de naissance:</span>
+            <span class="value">{{ personData.babyBirthDate | date: 'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="info-row" *ngIf="personData.babyWeight">
+            <span class="label">Poids:</span>
+            <span class="value">{{ personData.babyWeight }}</span>
+          </div>
+        </div>
+
+        <!-- Apparence du bébé -->
+        <div class="section" *ngIf="personData.babyEyesColor || personData.babyHairColor || personData.babyHairType">
+          <h3>Apparence</h3>
+          <div class="info-row" *ngIf="personData.babyEyesColor">
+            <span class="label">Couleur des yeux:</span>
+            <span class="value">{{ personData.babyEyesColor }}</span>
+          </div>
+          <div class="info-row" *ngIf="personData.babyHairColor">
+            <span class="label">Couleur des cheveux:</span>
+            <span class="value">{{ personData.babyHairColor }}</span>
+          </div>
+          <div class="info-row" *ngIf="personData.babyHairType">
+            <span class="label">Type de cheveux:</span>
+            <span class="value">{{ personData.babyHairType }}</span>
+          </div>
+        </div>
+
+        <!-- Autres données -->
+        <div class="section" *ngIf="personData">
+          <h3>Autres Informations</h3>
+          <div class="info-row" *ngFor="let key of getAdditionalKeys()">
+            <span class="label">{{ key | titlecase }}:</span>
+            <span class="value">{{ personData[key] }}</span>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Retour
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

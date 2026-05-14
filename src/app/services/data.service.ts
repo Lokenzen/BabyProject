@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError, of } from 'rxjs';
+import { Observable, throwError, of, BehaviorSubject } from 'rxjs';
 import { catchError, retry, timeout } from 'rxjs/operators';
 
 /**
@@ -24,7 +24,7 @@ export interface ResponseData {
 })
 export class DataService {
   // URL de l'API Google Apps Script
-  private readonly GOOGLE_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbyLBg0poKsCPGC6V5Y86M91-SDHykCHIYyfOa1Iz-pb1nK0sxLD173W3AlSUzY9AcY2/exec';
+  private readonly GOOGLE_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbzxhycIU_FVx-xU6BKd-E6iwgOmzqbFnW7INhynlRp0DphBAnL-vLiuTm0IEZx1ZpSQ/exec';
 
   constructor(private http: HttpClient) { }
 
@@ -75,6 +75,21 @@ sendData(data: ResponseData): Observable<any> {
   }
 
   /**
+   * Rechercher une personne par firstName et lastName
+   */
+  searchParticipant(firstName: string, lastName: string): Observable<any> {
+  const url = `${this.GOOGLE_APPS_SCRIPT}?firstName=${firstName}&lastName=${lastName}`;
+  
+  return this.http.get(url).pipe(
+    timeout(10000),
+    catchError(error => {
+      console.error('Erreur de recherche:', error);
+      return throwError(() => error);
+    })
+  );
+}
+
+  /**
    * Mettre à jour une donnée via PUT
    */
   updateData(id: string, data: ResponseData) {
@@ -107,5 +122,14 @@ sendData(data: ResponseData): Observable<any> {
       })
     );
   }
+
+  private selectedParticipantSource = new BehaviorSubject<ResponseData | null>(null);
+  // Observable que le composant de détail va écouter
+  selectedParticipant$ = this.selectedParticipantSource.asObservable();
+
+  setParticipant(data: ResponseData) {
+    this.selectedParticipantSource.next(data);
+  }
 }
+
 

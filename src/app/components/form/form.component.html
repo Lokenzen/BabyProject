@@ -415,14 +415,27 @@
 <!-- Sticky Footer Navigation -->
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="sticky-footer">
   <div class="footer-buttons">
+    <!-- Bouton pour aller au précédent (sauf sur première étape) -->
     <button
       mat-flat-button
       color="accent"
       type="button"
       (click)="goToPreviousStep()"
-      [disabled]="isFirstStep()"
+      *ngIf="!isFirstStep()"
       class="nav-button prev-button">
       <mat-icon>arrow_back_ios</mat-icon>
+    </button>
+
+    <!-- Bouton "Déjà voté" sur la première étape -->
+    <button
+      mat-flat-button
+      color="accent"
+      type="button"
+      (click)="openSearchDialog()"
+      *ngIf="isFirstStep()"
+      class="nav-button already-voted-button">
+      <mat-icon>search</mat-icon>
+      Déjà voté ?
     </button>
 
     <button

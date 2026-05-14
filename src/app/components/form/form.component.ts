@@ -25,6 +25,9 @@ import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common';
 registerLocaleData(localeFr);
 import { DateAdapter, MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
+import { SuccessDialogComponent } from '../../success-dialog/success-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { SearchParticipantDialogComponent } from '../search-participant-dialog/search-participant-dialog.component';
 
 interface TabConfig {
   title: string;
@@ -142,7 +145,8 @@ export class FormComponent implements OnInit, OnDestroy {
     private dataService: DataService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private _adapter: DateAdapter<any>
+    private _adapter: DateAdapter<any>,
+    private dialog: MatDialog
   ) {
     this._adapter.setLocale('fr-FR');
     this.initializeForm();
@@ -300,9 +304,6 @@ export class FormComponent implements OnInit, OnDestroy {
     return this.form.valid;
   }
 
-  /**
-   * Soumettre le formulaire
-   */
   onSubmit(): void {
     if (!this.isFormValid()) {
       this.showSnackBar('Veuillez remplir tous les champs correctement', 'error');
@@ -310,28 +311,61 @@ export class FormComponent implements OnInit, OnDestroy {
     }
 
     this.isLoading = true;
-    const formData: ResponseData = {
-      ...this.form.value
-    };
+    const formData: ResponseData = { ...this.form.value };
 
     this.dataService.sendData(formData)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (response) => {
+        next: () => {
           this.isLoading = false;
-          this.showSnackBar('Données envoyées avec succès!', 'success');
-          this.form.reset();
-          // Redirection vers les résultats
-          setTimeout(() => {
-            this.router.navigate(['/results']);
-          }, 500);
+          this.openSuccessDialog(); // On lance la popup
         },
         error: (error) => {
           this.isLoading = false;
-          console.error('Erreur lors de l\'envoi:', error);
-          this.showSnackBar('Erreur lors de l\'envoi des données', 'error');
+          // On vérifie quand même si ce n'est pas un "faux" échec (CORS)
+          if (error.status === 0 || error.status === 200) {
+            this.openSuccessDialog();
+          } else {
+            console.error('Erreur lors de l\'envoi:', error);
+            this.showSnackBar('Erreur lors de l\'envoi des données', 'error');
+          }
         }
       });
+  }
+
+  private openSuccessDialog(): void {
+    const dialogRef = this.dialog.open(SuccessDialogComponent, {
+      width: '90%',
+      maxWidth: '500px',
+      disableClose: true, // L'utilisateur doit cliquer sur un bouton
+      panelClass: 'glass-dialog' // Pour ton style futuriste
+    });
+
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if (result === 'reset') {
+        this.form.reset();
+        this.stepper.reset(); // Recommencer à l'étape 0
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  }
+
+  openSearchDialog(): void {
+    const dialogRef = this.dialog.open(SearchParticipantDialogComponent, {
+      width: '90%',
+      maxWidth: '500px',
+      disableClose: false,
+      panelClass: 'glass-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result && result.success) {
+        // La recherche a réussi, rediriger vers la page de détails
+        this.dataService.setParticipant(result.data.data);
+        this.router.navigate(['/detail']);
+      }
+      // Si result est undefined ou success est false, on reste sur cette page
+    });
   }
 
   formatWeightLabel(value: number): string {
