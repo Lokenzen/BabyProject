@@ -141,3 +141,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   --mdc-slider-hover-handle-color: #40E0D0;
 }
 
+.mat-mdc-dialog-surface {
+    background: linear-gradient(135deg, #FFE4F5 0%, #E0F4FF 50%, #FFF4E6 100%);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 400px;
+    width: 100%;
+}

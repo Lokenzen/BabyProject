@@ -60,7 +60,7 @@ export class SearchParticipantDialogComponent {
           this.errorMessage = result.error;
         } else if (result) {
           // Succès - retourner les données
-          this.dialogRef.close({ success: true, data: result, firstName, lastName });
+          this.dialogRef.close({ success: true, data: result });
         } else {
           this.errorMessage = 'Personne non trouvée';
         }

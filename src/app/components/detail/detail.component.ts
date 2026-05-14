@@ -49,15 +49,14 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.dataService.selectedParticipant$.subscribe(data => {
         console.log('Données reçues pour le détail :', data);   
         if (data) {
-        
-        this.personData = data;
-        this.isLoading = false;
-        // ✅ Ne commence PAS par un slash
-        this.imagePath = this.personData.babySex === 'Boy' 
-        ? 'assets/Boy.png' 
-        : 'assets/Fille.png';
-        } else {
+            this.personData = data;
             this.isLoading = false;
+            // ✅ Ne commence PAS par un slash
+            this.imagePath = this.personData.babySex === 'Boy' 
+            ? 'assets/Boy.png' 
+            : 'assets/Fille.png';
+        } else {
+            this.router.navigate(['']);
         // Optionnel : si l'utilisateur rafraîchit la page (F5), le service est vide.
         // Tu peux ici utiliser les queryParams pour refaire une petite recherche auto.
         }
@@ -74,7 +73,8 @@ export class DetailComponent implements OnInit, OnDestroy {
     const excludeKeys = [
       'firstName',
       'lastName',
-      'babyName',
+      'babyNameGirl',
+      'babyNameBoy',
       'babySex',
       'babyEyesColor',
       'babyHairColor',

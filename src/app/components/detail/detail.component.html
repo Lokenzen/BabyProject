@@ -28,45 +28,48 @@
         <div class="header-container">
             <!-- Zone Image -->
             <div class="gender-sidebar" [ngClass]="personData.babySex">
-            <img [src]="personData.babySex === 'Boy' ? 'assets/Boy.png' : 'assets/Fille.png'" 
+            <img [src]="personData.babySex === 'M' ? './assets/img/Boy.png' : './assets/img/Fille.png'" 
                 class="gender-icon">
             </div>
 
             <!-- Zone Texte -->
             <div class="header-text">
-            <mat-card-header>
-                <mat-card-title>{{ personData.firstName }} {{ personData.lastName }}</mat-card-title>
-                <mat-card-subtitle>Détails de la personne</mat-card-subtitle>
-            </mat-card-header>
+                <mat-card-header>
+                    <div *ngIf="personData.babySex === 'M'">
+                        <mat-card-title>{{ personData.babyNameBoy }} Kernoa</mat-card-title>
+                        <mat-card-subtitle>D'après {{ personData.firstName }} {{ personData.lastName }} le {{ personData.createdDate | date: 'dd/MM/yyyy' }}</mat-card-subtitle>
+                    </div>
+                    <div *ngIf="personData.babySex === 'F'">
+                        <mat-card-title>{{ personData.babyNameGirl }} Kernoa</mat-card-title>
+                        <mat-card-subtitle>D'après {{ personData.firstName }} {{ personData.lastName }} le {{ personData.createdDate | date: 'dd/MM/yyyy' }}</mat-card-subtitle>                 
+                    </div>
+                    
+                </mat-card-header>
             </div>
         </div>
     </mat-card> 
 
     <mat-card-content>
       <div class="info-grid">
-        <!-- Informations personnelles -->
-        <div class="section">
-          <h3>Informations Personnelles</h3>
-          <div class="info-row">
-            <span class="label">Prénom:</span>
-            <span class="value">{{ personData.firstName }}</span>
-          </div>
-          <div class="info-row">
-            <span class="label">Nom:</span>
-            <span class="value">{{ personData.lastName }}</span>
-          </div>
-        </div>
-
         <!-- Informations du bébé -->
-        <div class="section" *ngIf="personData.babyName">
-          <h3>Informations du Bébé</h3>
+        <div class="section" *ngIf="personData.babyNameGirl || personData.babyNameBoy">
+          <h3>Prédiction</h3>
           <div class="info-row">
-            <span class="label">Nom:</span>
-            <span class="value">{{ personData.babyName }}</span>
+            <span class="label">Nom (Fille):</span>
+            <span class="value">{{ personData.babyNameGirl }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Nom (Garçon):</span>
+            <span class="value">{{ personData.babyNameBoy }}</span>
           </div>
           <div class="info-row" *ngIf="personData.babySex">
             <span class="label">Sexe:</span>
-            <span class="value">{{ personData.babySex }}</span>
+            <div *ngIf="personData.babySex === 'M'">
+                <span class="value">P'tit boy !</span>
+            </div>
+            <div *ngIf="personData.babySex === 'F'">
+                <span class="value">Baby girl !</span>
+            </div>
           </div>
           <div class="info-row" *ngIf="personData.babyBirthDate">
             <span class="label">Date de naissance:</span>
@@ -74,7 +77,7 @@
           </div>
           <div class="info-row" *ngIf="personData.babyWeight">
             <span class="label">Poids:</span>
-            <span class="value">{{ personData.babyWeight }}</span>
+            <span class="value">{{ personData.babyWeight }} Kg</span>
           </div>
         </div>
 

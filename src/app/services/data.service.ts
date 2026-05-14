@@ -10,12 +10,14 @@ export interface ResponseData {
   firstName: string;
   lastName: string;
   babySex: string;
-  babyName?: string;
+  babyNameGirl?: string;
+  babyNameBoy?: string;
   babyEyesColor?: string;
   babyHairColor?: string;
   babyBirthDate?: string;
   babyHairType?: string;
   babyWeight?: string;
+  createdDate?: string;
   [key: string]: any;
 }
 
@@ -24,7 +26,7 @@ export interface ResponseData {
 })
 export class DataService {
   // URL de l'API Google Apps Script
-  private readonly GOOGLE_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbzxhycIU_FVx-xU6BKd-E6iwgOmzqbFnW7INhynlRp0DphBAnL-vLiuTm0IEZx1ZpSQ/exec';
+  private readonly GOOGLE_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbwMLjCjq6z3eUBCorMcMwj-IROb0GS_VcTU1VzCF1Lvbv_wKl_9kIMa5NSWGHM7d87e/exec';
 
   constructor(private http: HttpClient) { }
 

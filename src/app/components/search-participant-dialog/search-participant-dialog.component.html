@@ -34,17 +34,6 @@
         </mat-error>
       </mat-form-field>
 
-      <!-- Message d'erreur -->
-      <div *ngIf="errorMessage" class="error-message">
-        <mat-icon>error</mat-icon>
-        <span>{{ errorMessage }}</span>
-      </div>
-
-      <!-- Message de chargement -->
-      <div *ngIf="isSearching" class="loading-container">
-        <mat-spinner diameter="30"></mat-spinner>
-        <p>Recherche en cours...</p>
-      </div>
     </form>
   </div>
 
