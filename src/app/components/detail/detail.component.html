@@ -24,30 +24,27 @@
 
   <!-- Person Data Card -->
   <mat-card *ngIf="personData && !isLoading" class="detail-card">
-    <mat-card class="detail-card">
-        <div class="header-container">
-            <!-- Zone Image -->
-            <div class="gender-sidebar" [ngClass]="personData.babySex">
-            <img [src]="personData.babySex === 'M' ? './assets/img/Boy.png' : './assets/img/Fille.png'" 
-                class="gender-icon">
-            </div>
+    <div class="header-container">
+      <!-- Zone Image -->
+      <div class="gender-sidebar" [ngClass]="personData.babySex">
+        <img [src]="personData.babySex === 'M' ? './assets/img/Boy.png' : './assets/img/Fille.png'" 
+          class="gender-icon">
+      </div>
 
-            <!-- Zone Texte -->
-            <div class="header-text">
-                <mat-card-header>
-                    <div *ngIf="personData.babySex === 'M'">
-                        <mat-card-title>{{ personData.babyNameBoy }} Kernoa</mat-card-title>
-                        <mat-card-subtitle>D'après {{ personData.firstName }} {{ personData.lastName }} le {{ personData.createdDate | date: 'dd/MM/yyyy' }}</mat-card-subtitle>
-                    </div>
-                    <div *ngIf="personData.babySex === 'F'">
-                        <mat-card-title>{{ personData.babyNameGirl }} Kernoa</mat-card-title>
-                        <mat-card-subtitle>D'après {{ personData.firstName }} {{ personData.lastName }} le {{ personData.createdDate | date: 'dd/MM/yyyy' }}</mat-card-subtitle>                 
-                    </div>
-                    
-                </mat-card-header>
-            </div>
-        </div>
-    </mat-card> 
+      <!-- Zone Texte -->
+      <div class="header-text">
+        <mat-card-header>
+          <div *ngIf="personData.babySex === 'M'">
+            <mat-card-title>{{ personData.babyNameBoy }} Kernoa</mat-card-title>
+            <mat-card-subtitle>D'après {{ personData.firstName }} {{ personData.lastName }} le {{ personData.createdDate | date: 'dd/MM/yyyy' }}</mat-card-subtitle>
+          </div>
+          <div *ngIf="personData.babySex === 'F'">
+            <mat-card-title>{{ personData.babyNameGirl }} Kernoa</mat-card-title>
+            <mat-card-subtitle>D'après {{ personData.firstName }} {{ personData.lastName }} le {{ personData.createdDate | date: 'dd/MM/yyyy' }}</mat-card-subtitle>                 
+          </div>
+        </mat-card-header>
+      </div>
+    </div> 
 
     <mat-card-content>
       <div class="info-grid">

@@ -46,21 +46,22 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Récupérer les paramètres de la route (query params ou path params)
-    this.dataService.selectedParticipant$.subscribe(data => {
+    this.dataService.selectedParticipant$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(data => {
         console.log('Données reçues pour le détail :', data);   
         if (data) {
-            this.personData = data;
-            this.isLoading = false;
-            // ✅ Ne commence PAS par un slash
-            this.imagePath = this.personData.babySex === 'Boy' 
+          this.personData = data;
+          this.imagePath = this.personData.babySex === 'Boy' 
             ? 'assets/Boy.png' 
             : 'assets/Fille.png';
+          this.isLoading = false;
         } else {
-            this.router.navigate(['']);
-        // Optionnel : si l'utilisateur rafraîchit la page (F5), le service est vide.
-        // Tu peux ici utiliser les queryParams pour refaire une petite recherche auto.
+          this.router.navigate(['']);
+          // Optionnel : si l'utilisateur rafraîchit la page (F5), le service est vide.
+          // Tu peux ici utiliser les queryParams pour refaire une petite recherche auto.
         }
-    });
+      });
   }
 
   goBack(): void {
