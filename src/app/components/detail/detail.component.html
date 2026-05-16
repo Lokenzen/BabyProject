@@ -36,11 +36,11 @@
         <mat-card-header>
           <div *ngIf="personData.babySex === 'M'">
             <mat-card-title>{{ personData.babyNameBoy }} Kernoa</mat-card-title>
-            <mat-card-subtitle>D'après {{ personData.firstName }} {{ personData.lastName }} le {{ personData.createdDate | date: 'dd/MM/yyyy' }}</mat-card-subtitle>
+            <mat-card-subtitle>D'après {{ personData.firstName }} {{ personData.lastName }} le {{ personData.createdDate }}</mat-card-subtitle>
           </div>
           <div *ngIf="personData.babySex === 'F'">
             <mat-card-title>{{ personData.babyNameGirl }} Kernoa</mat-card-title>
-            <mat-card-subtitle>D'après {{ personData.firstName }} {{ personData.lastName }} le {{ personData.createdDate | date: 'dd/MM/yyyy' }}</mat-card-subtitle>                 
+            <mat-card-subtitle>D'après {{ personData.firstName }} {{ personData.lastName }} le {{ personData.createdDate }}</mat-card-subtitle>                 
           </div>
         </mat-card-header>
       </div>
@@ -70,7 +70,7 @@
           </div>
           <div class="info-row" *ngIf="personData.babyBirthDate">
             <span class="label">Date de naissance:</span>
-            <span class="value">{{ personData.babyBirthDate | date: 'dd/MM/yyyy' }}</span>
+            <span class="value">{{ personData.babyBirthDate }}</span>
           </div>
           <div class="info-row" *ngIf="personData.babyWeight">
             <span class="label">Poids:</span>
