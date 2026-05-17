@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -32,8 +32,6 @@ export class DetailComponent implements OnInit, OnDestroy {
   personData: ResponseData | null = null;
   isLoading = true;
   errorMessage = '';
-  firstName = '';
-  lastName = '';
 
   private destroy$ = new Subject<void>();
   imagePath: string = '';
@@ -66,6 +64,10 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   goBack(): void {
     this.router.navigate(['']);
+  }
+  
+  onGoToSite() {
+    window.open('https://minipouce.fr/ocetom', '_blank');
   }
 
   getAdditionalKeys(): string[] {

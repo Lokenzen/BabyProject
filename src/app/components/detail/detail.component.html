@@ -70,7 +70,7 @@
           </div>
           <div class="info-row" *ngIf="personData.babyBirthDate">
             <span class="label">Date de naissance:</span>
-            <span class="value">{{ personData.babyBirthDate }}</span>
+            <span class="value">{{ personData.babyBirthDate ? (personData.babyBirthDate | date:'dd/MM/yyyy') : '-' }} </span>
           </div>
           <div class="info-row" *ngIf="personData.babyWeight">
             <span class="label">Poids:</span>
@@ -111,6 +111,7 @@
         <mat-icon>arrow_back</mat-icon>
         Retour
       </button>
+      <button mat-raised-button color="accent" (click)="onGoToSite()">Voir notre liste de naissance</button>
     </mat-card-actions>
   </mat-card>
 </div>
