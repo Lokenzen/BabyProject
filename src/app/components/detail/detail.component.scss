@@ -167,7 +167,7 @@ $success-color: #4CAF50;
 
       &[color="primary"] {
         background: linear-gradient(135deg, $primary-pastel, $secondary-pastel) !important;
-        color: #fff;
+        color: #000;
         box-shadow: 0 4px 15px rgba(255, 182, 217, 0.3);
 
         transform: translateY(-2px) scale(1.02);

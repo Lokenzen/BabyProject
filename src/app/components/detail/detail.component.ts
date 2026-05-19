@@ -83,7 +83,7 @@ export class DetailComponent implements OnInit, OnDestroy {
       'babyHairColor',
       'babyBirthDate',
       'babyHairType',
-      'babyWeight'
+      'babyWeight' 
     ];
 
     return Object.keys(this.personData)

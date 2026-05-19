@@ -47,7 +47,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
     mat-card-subtitle {
       color: rgba(255,255,255,.9);
-      font-size: 14px;
+      font-size: 18px;
     }
   }
 
@@ -147,4 +147,29 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     padding: 24px;
     max-width: 400px;
     width: 100%;
+}
+
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-floating-label,
+.mat-mdc-form-field .mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
+    color: #5a4a42 !important;
+    font-size: 24px !important;
+}
+
+
+.girl-name {
+    .mdc-notched-outline.mdc-notched-outline--notched.mdc-notched-outline--upgraded {
+      background: linear-gradient(90deg, #F090C6 0%, #FADADD 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: #F090C6;
+        background-clip: text;
+    }
+}
+
+.boy-name {
+    .mdc-notched-outline.mdc-notched-outline--notched.mdc-notched-outline--upgraded {
+      background: linear-gradient(90deg, #40E0D0 0%, #B2F4F4 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: #40E0D0;
+        background-clip: text;
+    }
 }

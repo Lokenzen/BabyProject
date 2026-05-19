@@ -15,9 +15,14 @@ export interface ResponseData {
   babyEyesColor?: string;
   babyHairColor?: string;
   babyBirthDate?: string;
+  babyBirthHour?: string;
+  babyBirthMinute?: string;
   babyHairType?: string;
   babyWeight?: string;
+  babyHeight?: string;
   createdDate?: string;
+  mommyPlace?: string;
+  daddyPlace?: string;
   [key: string]: any;
 }
 

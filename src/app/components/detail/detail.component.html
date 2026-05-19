@@ -50,7 +50,7 @@
       <div class="info-grid">
         <!-- Informations du bébé -->
         <div class="section" *ngIf="personData.babyNameGirl || personData.babyNameBoy">
-          <h3>Prédiction</h3>
+          <h3>Identité</h3>
           <div class="info-row">
             <span class="label">Nom (Fille):</span>
             <span class="value">{{ personData.babyNameGirl }}</span>
@@ -72,15 +72,23 @@
             <span class="label">Date de naissance:</span>
             <span class="value">{{ personData.babyBirthDate ? (personData.babyBirthDate | date:'dd/MM/yyyy') : '-' }} </span>
           </div>
+          <div class="info-row" *ngIf="personData.babyBirthHour">
+            <span class="label">Heure de naissance:</span>
+            <span class="value">{{ personData.babyBirthHour ? (personData.babyBirthHour) : '-' }}h{{ personData.babyBirthMinute ? (personData.babyBirthMinute) : '-' }} </span>
+          </div>
           <div class="info-row" *ngIf="personData.babyWeight">
             <span class="label">Poids:</span>
             <span class="value">{{ personData.babyWeight }} Kg</span>
+          </div>
+          <div class="info-row" *ngIf="personData.babyHeight">
+            <span class="label">Taille:</span>
+            <span class="value">{{ personData.babyHeight }} cm</span>
           </div>
         </div>
 
         <!-- Apparence du bébé -->
         <div class="section" *ngIf="personData.babyEyesColor || personData.babyHairColor || personData.babyHairType">
-          <h3>Apparence</h3>
+          <h3>Sa p'tite frimousse</h3>
           <div class="info-row" *ngIf="personData.babyEyesColor">
             <span class="label">Couleur des yeux:</span>
             <span class="value">{{ personData.babyEyesColor }}</span>
@@ -90,17 +98,18 @@
             <span class="value">{{ personData.babyHairColor }}</span>
           </div>
           <div class="info-row" *ngIf="personData.babyHairType">
-            <span class="label">Type de cheveux:</span>
+            <span class="label">Densité de cheveux:</span>
             <span class="value">{{ personData.babyHairType }}</span>
           </div>
-        </div>
-
-        <!-- Autres données -->
-        <div class="section" *ngIf="personData">
-          <h3>Autres Informations</h3>
-          <div class="info-row" *ngFor="let key of getAdditionalKeys()">
-            <span class="label">{{ key | titlecase }}:</span>
-            <span class="value">{{ personData[key] }}</span>
+          <br>
+          <h3>Le début des hostilités</h3>
+          <div class="info-row" *ngIf="personData.mommyPlace">
+            <span class="label">Où sera Océane:</span>
+            <span class="value">{{ personData.mommyPlace }}</span>
+          </div>
+          <div class="info-row" *ngIf="personData.daddyPlace">
+            <span class="label">Où sera Tom:</span>
+            <span class="value">{{ personData.daddyPlace }}</span>
           </div>
         </div>
       </div>

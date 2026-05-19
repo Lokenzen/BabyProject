@@ -110,7 +110,7 @@ $error-color: #c53030;
 
 .step-label {
   color: $text-dark;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   transition: all 0.3s ease;
   text-transform: capitalize;
@@ -194,7 +194,7 @@ $error-color: #c53030;
   p {
     color: $text-dark;
     margin-bottom: 1rem;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.6;
   }
 
@@ -280,7 +280,7 @@ $error-color: #c53030;
   .eye-color-error,
   .sex-error {
     color: $error-color;
-    font-size: 12px;
+    font-size: 16px;
     margin-top: 0.5rem;
     display: block;
     font-weight: 500;
@@ -297,8 +297,8 @@ $error-color: #c53030;
 .section-label {
   display: block;
   margin-bottom: 1rem;
-  color: $primary-pastel;
-  font-size: 15px;
+  color: $text-dark;
+  font-size: 18px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -484,7 +484,7 @@ $error-color: #c53030;
 
     .mat-mdc-input-element {
       color: $text-dark !important;
-      font-size: 14px;
+      font-size: 16px;
     }
 
     .mdc-notched-outline__leading,
@@ -508,7 +508,7 @@ $error-color: #c53030;
 
   .mat-mdc-form-field-error {
     color: $error-color !important;
-    font-size: 12px;
+    font-size: 16px;
     margin-top: 0.5rem;
     font-weight: 500;
   }
@@ -607,7 +607,7 @@ $error-color: #c53030;
 
 .prev-button {
   background: $secondary-pastel !important;
-  color: #fff;
+  color: #000;
 
   &:hover:not(:disabled) {
     background: darken($secondary-pastel, 10%);
@@ -616,7 +616,7 @@ $error-color: #c53030;
 
 .already-voted-button {
   background: #9C27B0 !important;
-  color: #fff;
+  color: #000;
 
   &:hover:not(:disabled) {
     background: darken(#9C27B0, 10%) !important;
@@ -624,18 +624,59 @@ $error-color: #c53030;
   }
 }
 
-.next-button {
-  background: $primary-pastel !important;
-  color: #fff;
+// Animation de remplissage du dégradé
+@keyframes fillGradientGirl {
+  0% {
+    background: linear-gradient(90deg, #FFB6D9 0%, #A3D5FF 100%);
+  }
+  100% {
+    background: #FFB6D9;
+  }
+}
 
-  &:hover:not(:disabled) {
-    background: darken($primary-pastel, 10%);
+@keyframes fillGradientBoy {
+  0% {
+    background: linear-gradient(90deg, #FFB6D9 0%, #A3D5FF 100%);
+  }
+  100% {
+    background: #A3D5FF;
+  }
+}
+
+.next-button {
+  background: linear-gradient(90deg, #FFB6D9 0%, #A3D5FF 100%) !important;
+  color: #000 !important;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.6s ease-in-out;
+
+  // État: sexe sélectionné (fille)
+  &.sex-selected.sex-girl {
+    animation: fillGradientGirl 0.8s ease-out forwards;
+      background: #F090C6 !important;
+      transform: translateY(-2px);
+  }
+
+  // État: sexe sélectionné (garçon)
+  &.sex-selected.sex-boy {
+    animation: fillGradientBoy 0.8s ease-out forwards;
+      background: #8AC5F0 !important;
+      transform: translateY(-2px);
+    
+  }
+
+  // État sans sélection (dégradé)
+  &:not(.sex-selected) {
+    &:hover:not(:disabled) {
+      filter: brightness(0.95);
+      transform: translateY(-2px);
+    }
   }
 }
 
 .submit-btn {
   background: linear-gradient(135deg, $primary-pastel, $accent-pastel);
-  color: #fff;
+  color: #000;
   min-width: 160px;
 
   &:hover:not(:disabled) {
@@ -675,7 +716,7 @@ $error-color: #c53030;
   }
 
   .nav-button {
-    font-size: 13px;
+    font-size: 16px;
     padding: 10px 16px;
     min-width: 120px;
   }
@@ -696,7 +737,7 @@ $error-color: #c53030;
   }
 
   .nav-button {
-    font-size: 12px;
+    font-size: 16px;
     padding: 8px 12px;
     min-width: 100px;
   }
@@ -821,4 +862,40 @@ $error-color: #c53030;
       border-width: 2px !important;
     }
   }
+}
+
+.button-classic {
+    min-width: 100px;
+    border-radius: 24px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease-in-out;
+    padding: 10px 24px;
+
+    background: linear-gradient(135deg, $primary-pastel, $secondary-pastel) !important;
+    color: #000;
+    box-shadow: 0 4px 15px rgba(255, 182, 217, 0.3);
+
+      &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 182, 217, 0.4);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+    mat-icon {
+      margin-right: 6px;
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+
+    .spinner-inline {
+      display: inline-block;
+      margin-right: 6px;
+    }
 }

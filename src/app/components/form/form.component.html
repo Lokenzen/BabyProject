@@ -111,16 +111,16 @@
                 Comme on est sympas on vous laisse la possibilité de proposer un prénom fille et un prénom garçon<br>
                 …au cas où votre pronostic sur le sexe ne soit pas le bon 😉<br>
               </p>
-              <mat-form-field appearance="outline" class="full-width" floatLabel="always">
+              <mat-form-field appearance="outline" class="full-width girl-name" floatLabel="always">
                 <mat-label>
-                  {{ form.get('babySex')?.value === 'F' ? "Quel sera le prénom de notre fille ?" : "Et si c'est finalement une fille ?" }}
+                  {{ form.get('babySex')?.value === 'F' ? "Pour une fille ?" : "Et si c'est finalement une fille ?" }}
                 </mat-label>
                 <input matInput formControlName="babyNameGirl" placeholder="👉 Écrivez votre idée juste ici">
                 <mat-icon matSuffix>child_care</mat-icon>
               </mat-form-field>
-              <mat-form-field appearance="outline" class="full-width" floatLabel="always">
+              <mat-form-field appearance="outline" class="full-width boy-name" floatLabel="always">
                 <mat-label>
-                  {{ form.get('babySex')?.value === 'M' ? "Quel sera le prénom de notre garçon ?" : "Et si c'est finalement un garçon ?" }}
+                  {{ form.get('babySex')?.value === 'M' ? "Pour un garçon ?" : "Et si c'est finalement un garçon ?" }}
                 </mat-label>
                 <input matInput formControlName="babyNameBoy" placeholder="👉 Écrivez votre idée juste ici">
                 <mat-icon matSuffix>child_care</mat-icon>
@@ -187,15 +187,15 @@
           </div>
         </mat-step>
 
-        <!-- Étape 6: Type de Cheveux -->
+        <!-- Étape 6: Densité de Cheveux -->
         <mat-step [stepControl]="form.get('babyHairType')!" [completed]="isStepValid(6)">
           <ng-template matStepLabel>
-            <span class="step-label">Type Cheveux</span>
+            <span class="step-label">Densité de Cheveux</span>
           </ng-template>
           <div class="stepper-content">
             <div class="glass-card">
               <div class="hair-type-section">
-                <label class="section-label">Type de Cheveux: {{hairsTypesSelected}}</label>
+                <label class="section-label">Densité de Cheveux: {{hairsTypesSelected}}</label>
                 <div class="hair-type-radio-group">
                   <div class="hair-type-radio-option" *ngFor="let type of hairTypes">
                     <input 
@@ -274,7 +274,9 @@
               <label class="section-label">
                 Quelle sera la date de naissance de bébé ?
               </label>
-
+              <p class="date-confirmation" *ngIf="form.get('babyBirthDate')?.value">
+                Pour rappel, la date du terme est le : 11 octobre 2026.
+              </p>
               <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Choisir une date</mat-label>
                 <input matInput [matDatepicker]="picker" formControlName="babyBirthDate" readonly (click)="picker.open()">
@@ -319,7 +321,7 @@
                   </div>
                 </div>
                 
-                <p class="time-hint">Utilisez les flèches pour ajuster (pas de 5 min)</p>
+                <p class="time-hint">Utilisez les flèches pour ajuster.</p>
               </div>
             </div>
           </div>
@@ -365,7 +367,7 @@
               <!-- Champ Prénom -->
               <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Votre Prénom</mat-label>
-                <input matInput formControlName="firstName" placeholder="Ex: Jean">
+                <input matInput formControlName="firstName" placeholder="Ex: Jesus">
                 <mat-icon matSuffix>person</mat-icon>
                 <mat-error *ngIf="form.get('firstName')?.hasError('required')">
                   Le prénom est obligatoire
@@ -378,7 +380,7 @@
               <!-- Champ Nom -->
               <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Votre Nom</mat-label>
-                <input matInput formControlName="lastName" placeholder="Ex: Dupont">
+                <input matInput formControlName="lastName" placeholder="Ex: Christ">
                 <mat-icon matSuffix>person</mat-icon>
                 <mat-error *ngIf="form.get('lastName')?.hasError('required')">
                   Le nom est obligatoire
@@ -387,6 +389,8 @@
                   Le nom doit contenir au moins 2 caractères
                 </mat-error>
               </mat-form-field>
+              
+              <p>Les informations fournies seront utilisées pour créer votre profil de devin.</p>
               <hr />
               <div class="final-step-container">
                 <label class="section-label">
@@ -422,7 +426,7 @@
       type="button"
       (click)="goToPreviousStep()"
       *ngIf="!isFirstStep()"
-      class="nav-button prev-button">
+      class="nav-button button-classic">
       <mat-icon>arrow_back_ios</mat-icon>
     </button>
 
@@ -433,18 +437,23 @@
       type="button"
       (click)="openSearchDialog()"
       *ngIf="isFirstStep()"
-      class="nav-button already-voted-button">
+      class="nav-button button-classic">
       <mat-icon>search</mat-icon>
       Déjà voté ?
     </button>
 
     <button
       mat-flat-button
-      color="primary"
       type="button"
       (click)="goToNextStep()"
       *ngIf="!isLastStep()"
-      class="nav-button next-button">
+      [ngClass]="{
+        'nav-button': true,
+        'next-button': true,
+        'sex-selected': form.get('babySex')?.value !== null && form.get('babySex')?.value !== '',
+        'sex-girl': form.get('babySex')?.value === 'F',
+        'sex-boy': form.get('babySex')?.value === 'M'
+      }">
       <mat-icon>arrow_forward_ios</mat-icon>
     </button>
 
